@@ -1,0 +1,7 @@
+{
+  "model": "BERT",
+  "model_name": "nlptown/bert-base-multilingual-uncased-sentiment",
+  "time_seconds": 7.985859155654907,
+  "memory_mb": 1017.625,
+  "num_examples": 453
+}

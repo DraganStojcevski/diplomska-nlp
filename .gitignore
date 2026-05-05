@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+results/matplotlib_cache/
+.history/
+models/*
+!models/README.md

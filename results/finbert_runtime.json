@@ -1,0 +1,7 @@
+{
+  "model": "FinBERT",
+  "model_name": "ProsusAI/finbert",
+  "time_seconds": 8.276455879211426,
+  "memory_mb": 776.078125,
+  "num_examples": 453
+}
