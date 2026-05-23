@@ -39,6 +39,7 @@ The project is split into clear files:
 09_experiment_data_size.py
 10_generate_experiment_graphs.py
 11_generate_presentation_assets.py
+12_validation_check.py
 app.py
 
 data/
@@ -63,6 +64,7 @@ Each file has one responsibility:
 09_experiment_data_size.py          DistilBERT training-data-size experiment
 10_generate_experiment_graphs.py    Regenerate improved graphs from experiment CSVs
 11_generate_presentation_assets.py  Confusion matrices, architecture diagram, analysis summary
+12_validation_check.py              Supplementary: verify hyperparameter choices on a held-out val set
 app.py                              Streamlit demo app
 ```
 
@@ -78,6 +80,12 @@ conda run -n diplomska-nlp python 06_evaluate_finetuned_distilbert.py
 conda run --no-capture-output -n diplomska-nlp python 07_train_bert_large.py
 conda run -n diplomska-nlp python 05_evaluation.py
 conda run -n diplomska-nlp python 06_results.py
+```
+
+Optional supplementary experiments (additive — do not modify any files produced by the main pipeline):
+
+```bash
+conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
 ```
 
 The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.

@@ -1,0 +1,87 @@
+{
+  "model": "Fine-tuned DistilBERT (validation-check)",
+  "base_model_name": "distilbert-base-uncased",
+  "purpose": "Verify the original hyperparameter choices (made on test) hold when selection is performed on a held-out validation set.",
+  "split": {
+    "train": 1584,
+    "val": 227,
+    "test": 453,
+    "val_fraction_of_original_train": 0.125,
+    "random_state": 42
+  },
+  "hyperparameters": {
+    "num_epochs": 5,
+    "batch_size": 8,
+    "learning_rate": 2e-05,
+    "max_length": 128
+  },
+  "device": "mps",
+  "training_time_seconds": 279.7251720428467,
+  "best_epoch_by_val": 2,
+  "best_val_accuracy": 0.9911894273127754,
+  "test_accuracy_at_best_epoch": 0.9580573951434879,
+  "test_f1_weighted_at_best_epoch": 0.9580139061478223,
+  "test_f1_macro_at_best_epoch": 0.9352800348280855,
+  "per_epoch": [
+    {
+      "epoch": 1,
+      "train_loss": 0.47202277776192536,
+      "val_loss": 0.15205683597716793,
+      "val_accuracy": 0.9559471365638766,
+      "val_f1_weighted": 0.9567648291317711,
+      "val_f1_macro": 0.9275220346598538,
+      "test_loss": 0.17131804390565344,
+      "test_accuracy": 0.9381898454746137,
+      "test_f1_weighted": 0.9390513734482271,
+      "test_f1_macro": 0.9145978966934091
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0928779931626085,
+      "val_loss": 0.05326059754488283,
+      "val_accuracy": 0.9911894273127754,
+      "val_f1_weighted": 0.9912201528120872,
+      "val_f1_macro": 0.987408412918867,
+      "test_loss": 0.1420238523319233,
+      "test_accuracy": 0.9580573951434879,
+      "test_f1_weighted": 0.9580139061478223,
+      "test_f1_macro": 0.9352800348280855
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.04493669936706246,
+      "val_loss": 0.07064872270385766,
+      "val_accuracy": 0.9779735682819384,
+      "val_f1_weighted": 0.9781122669193159,
+      "val_f1_macro": 0.9664077516778408,
+      "test_loss": 0.16615653965262728,
+      "test_accuracy": 0.9514348785871964,
+      "test_f1_weighted": 0.9523516229690752,
+      "test_f1_macro": 0.9388963161021985
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.02386729793406722,
+      "val_loss": 0.0584373663998498,
+      "val_accuracy": 0.9911894273127754,
+      "val_f1_weighted": 0.9912176414388375,
+      "val_f1_macro": 0.9874928227790818,
+      "test_loss": 0.13884099837792874,
+      "test_accuracy": 0.9713024282560706,
+      "test_f1_weighted": 0.9714468614627891,
+      "test_f1_macro": 0.9606281293353301
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.014439429486913588,
+      "val_loss": 0.08424076726178414,
+      "val_accuracy": 0.973568281938326,
+      "val_f1_weighted": 0.973638366039247,
+      "val_f1_macro": 0.9586038961038961,
+      "test_loss": 0.13620305017939882,
+      "test_accuracy": 0.9735099337748344,
+      "test_f1_weighted": 0.9735513107918417,
+      "test_f1_macro": 0.960321946092697
+    }
+  ]
+}
