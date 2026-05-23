@@ -1,7 +1,7 @@
 {
   "model": "General Model",
   "model_name": "distilbert/distilbert-base-uncased-finetuned-sst-2-english",
-  "time_seconds": 7.038672924041748,
-  "memory_mb": 309.34375,
+  "time_seconds": 7.143648147583008,
+  "memory_mb": 306.15625,
   "num_examples": 453
 }

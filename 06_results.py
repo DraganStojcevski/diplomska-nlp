@@ -25,6 +25,7 @@ DISPLAY_NAMES = {
 }
 BAR_COLORS = ["#6b7280", "#10b981", "#f59e0b", "#2563eb"]
 BERT_LARGE_FALLBACK_EVAL_TIME_SECONDS = 15.66961121559143
+BERT_LARGE_FALLBACK_MEMORY_MB = 384.1875
 
 
 def save_bar_chart(models, values, title, ylabel, output_path, score_chart=False):
@@ -125,7 +126,7 @@ def build_bert_large_row():
             "bert_large_finetuned_predicted_label",
         )
         time_seconds = BERT_LARGE_FALLBACK_EVAL_TIME_SECONDS
-        memory_mb = None
+        memory_mb = BERT_LARGE_FALLBACK_MEMORY_MB
 
     metrics = weighted_metrics_from_report(report)
 

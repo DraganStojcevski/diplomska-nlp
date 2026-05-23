@@ -6,7 +6,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 402,Major Order in India Comptel Corporation has received a significant long-term order for mediation and provisioning solutions being used by a leading operator in India .,2,positive,2,positive
 306,"Helsinki on October 22 , 2008 SSH COMMUNICATIONS SECURITY CORP Board of Directors For further information , please contact : Tomi Laamanen , Chairman , tel. +358 0 400 609 544 Distribution : NASDAQ OMX Helsinki Ltd. .",1,neutral,1,neutral
 1511,The shares shall be acquired according to the Rules of NASDAQ OMX Helsinki and otherwise according to the rules related to acquisition of the company 's own shares .,1,neutral,1,neutral
-416,"Finnish flexible packaging manufacturer Suominen Corporation reports net sales of EUR 54.5 mn in the first quarter of 2008 , compared with EUR 54.3 mn a year earlier .",2,positive,0,negative
+416,"Finnish flexible packaging manufacturer Suominen Corporation reports net sales of EUR 54.5 mn in the first quarter of 2008 , compared with EUR 54.3 mn a year earlier .",2,positive,2,positive
 1523,"The transaction is subject to a final agreement between the parties , approvals of their decision-making bodies and approval by the Finnish Competition Authority .",1,neutral,1,neutral
 1823,The total capacity of the factory will be approximately 100 engines a year .,1,neutral,1,neutral
 280,"Ruukki 's delivery includes steel structures , including installation , for Krakeroy bascule bridge and steel piles for the bridge foundations .",1,neutral,1,neutral
@@ -53,7 +53,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1366,Technopolis has approximately 130 customer companies in Jyvaskyla .,1,neutral,1,neutral
 300,It estimates the operating profit to further improve from the third quarter .,2,positive,2,positive
 7,"Consolidated net sales increased 16 % to reach EUR74 .8 m , while operating profit amounted to EUR0 .9 m compared to a loss of EUR0 .7 m in the prior year period .",2,positive,2,positive
-1231,"Fortum expects its annual capital expenditure in the next four to five years to be within a range of EUR 0.8-1 .2 billion , as earlier announced .",1,neutral,1,neutral
+1231,"Fortum expects its annual capital expenditure in the next four to five years to be within a range of EUR 0.8-1 .2 billion , as earlier announced .",1,neutral,2,positive
 1365,"Target company : Tieto Corporation , Business Identity Code : 0101138-5 Date of change in holding : 22 January 2010 Portion of the shares and votes : The current group holding of OP-Pohjola Group Central Cooperative ( OPK ) is 2982 587 shares , which represents 4.14 % of the shares and voting rights .",1,neutral,1,neutral
 1334,"Previously , Grimaldi held a 46.43 pct stake in the Finnish company following the takeover bid launched in November 2006 .",1,neutral,1,neutral
 2196,"In July-September 2009 , Konecranes ' sales decreased to EUR 368.7 mn from EUR 520.4 mn in July-September 2008 .",0,negative,0,negative
@@ -68,12 +68,12 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1767,The EA Reng group posted sales of approximately 84 million kroons for 2007 .,1,neutral,1,neutral
 799,Both the net sales and operating profit were record high in the company 's history .,2,positive,2,positive
 1750,"The company said that 80 % of the shares of the holding company will be sold to Meadville Holdings Limited , a Hong Kong listed parent company of the Meadville Group .",1,neutral,1,neutral
-1171,"As part of the agreement , Aspocomp will also give Meadville a 10 pct slice of a subsidiary operating in Oulu , Finland .",1,neutral,1,neutral
+1171,"As part of the agreement , Aspocomp will also give Meadville a 10 pct slice of a subsidiary operating in Oulu , Finland .",1,neutral,2,positive
 1367,"Tecnomen , headquartered in Espoo , Finland , develops messaging and charging solutions for telecomms operators and service providers worldwide .",1,neutral,1,neutral
 1065,"The cost of the deal could range from 70 million to 90 million euros depending on the financial results of the two companies in 2008 , the statement says .",1,neutral,1,neutral
 2144,"In the fourth quarter of 2008 , net sales decreased to EUR 121.4 mn from EUR 165.5 mn in the fourth quarter of 2007 .",0,negative,0,negative
 541,An audio webcast will be available live and archived on Cerner 's Web site at www.cerner.com .,1,neutral,1,neutral
-1702,"Previously , the company expected its 2008 financial performance to remain at the same level as in 2008 .",1,neutral,1,neutral
+1702,"Previously , the company expected its 2008 financial performance to remain at the same level as in 2008 .",1,neutral,2,positive
 215,Earnings per share EPS rose to EUR 0.11 from EUR 0.03 .,2,positive,2,positive
 2019,"Copper , lead and nickel also dropped ... HBOS ( HBOS ) plummeted 20 % to 70.3 pence after saying this year+ó ??",0,negative,0,negative
 1049,"The company operates its business through two reportable segments , including Banking and Investment Services , and Non-Life Insurance .",1,neutral,1,neutral
@@ -109,14 +109,14 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 2262,"Operating profit fell to EUR 35.4 mn from EUR 68.8 mn in 2007 , including vessel sales gain of EUR 12.3 mn .",0,negative,0,negative
 305,"Following this increase Huhtamaki 's registered share capital is EUR360 .62 m and the number of shares outstanding is 106,063,320 .",1,neutral,2,positive
 1251,"In a release on Oct. 28 , Peab said the two businesses will continue to be conducted under the brands Cliffton and Stockholm Entreprenad , both part of the Peab Group .",1,neutral,1,neutral
-307,"The offer of some 30 million shares aimed to raise more than  x20ac 500 million US$ 640 million , was expected to be completed by Oct. 9 , Outokumpu said .",1,neutral,1,neutral
+307,"The offer of some 30 million shares aimed to raise more than  x20ac 500 million US$ 640 million , was expected to be completed by Oct. 9 , Outokumpu said .",1,neutral,2,positive
 454,"Finnish airline Finnair has won a deal with the UK public sector to be the official airline for flights from London Heathrow to Osaka in Japan , as well as flights between Manchester in the UK and Helsinki in Finland .",2,positive,2,positive
 1145,A paper mill in the central Maine town of Madison soon will have a new owner .,1,neutral,1,neutral
 420,"According to Atria 's President and CEO Matti Tikkakoski , the company 's Swedish operations significantly improved in the first quarter .",2,positive,2,positive
 1211,"During the rally , which was authorized by the city administration , a consulate official came out to the workers , spoke to them and took a letter from them .",1,neutral,1,neutral
 1097,"The order comprises four ball mills , which will be organized in two different streams for treating ore in the Pilanesberg platinum mine .",1,neutral,1,neutral
 889,The forecast for 2012 is 3.3 % .,1,neutral,1,neutral
-371,"Finnish power supply solutions and systems provider Efore Oyj said its net loss widened to 3.2 mln euro $ 4.2 mln for the first quarter of fiscal 2006-2007 ending October 31 , 2007 from 900,000 euro $ 1.2 mln for the same period of fiscal 2005-06 .",0,negative,0,negative
+371,"Finnish power supply solutions and systems provider Efore Oyj said its net loss widened to 3.2 mln euro $ 4.2 mln for the first quarter of fiscal 2006-2007 ending October 31 , 2007 from 900,000 euro $ 1.2 mln for the same period of fiscal 2005-06 .",0,negative,2,positive
 1192,Closing of such transaction took place today .,1,neutral,1,neutral
 1918,"Cash flow from operations totalled EUR 2.71 mn , compared to a negative EUR 0.83 mn in the corresponding period in 2008 .",2,positive,2,positive
 2142,Finnish metal products company Componenta Oyj net profit went slightly down to 25.1 mln euro ( $ 40.2 mln ) for the first half of 2008 from 25.4 mln euro ( $ 40.7 mln ) for the same period of 2007 .,0,negative,0,negative
@@ -162,7 +162,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1819,"The Stockmann department store will have a total floor space of over 8,000 square metres and Stockmann 's investment in the project will have a price tag of about EUR 12 million .",1,neutral,1,neutral
 456,Cargotec Germany GmbH has been awarded a contract by Stadtverwaltung Mainz for chassis bodies under Open procedure .,2,positive,2,positive
 107,Diluted earnings per share ( EPS ) rose to EUR 0.52 versus EUR 0.09 .,2,positive,2,positive
-1448,The idea of saving electricity in data transfer is still a new one .,1,neutral,1,neutral
+1448,The idea of saving electricity in data transfer is still a new one .,1,neutral,2,positive
 1028,"Steek , which was set up in 2002 , is based in Bordeaux , southwestern France .",1,neutral,1,neutral
 1100,"The parties have agreed not to disclose the price of the deal , the group said in a press release .",1,neutral,1,neutral
 973,"Glaston 's share GLA1V is listed on the NASDAQ OMX Helsinki , Mid Cap List .",1,neutral,1,neutral
@@ -176,7 +176,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1881,Operating loss amounted to EUR 0.9 mn in the first half of 2006 compared to a profit of EUR 0.5 mn in the first half of 2005 .,0,negative,0,negative
 246,Revenue grew 1 percent to euro742 .2 million US$ 964 million from euro735 million .,2,positive,2,positive
 972,"Founded in 1923 , Finnair is one of the world 's oldest airlines and flies to 60 destinations with a fleet of 63 aircraft , employing 9,500 people .",1,neutral,1,neutral
-9,"HELSINKI ( AFX ) - Shares closed higher , led by Nokia after it announced plans to team up with Sanyo to manufacture 3G handsets , and by Nokian Tyres after its fourth-quarter earnings report beat analysts ' expectations , dealers said .",2,positive,0,negative
+9,"HELSINKI ( AFX ) - Shares closed higher , led by Nokia after it announced plans to team up with Sanyo to manufacture 3G handsets , and by Nokian Tyres after its fourth-quarter earnings report beat analysts ' expectations , dealers said .",2,positive,2,positive
 538,"Also , a six-year historic analysis is provided for this market .",1,neutral,1,neutral
 1608,Cameco typically prices sales contracts using a 40:60 ratio of fixed prices and spot prices .,1,neutral,1,neutral
 1265,"industry in Asia +ó Pakistan , Malaysia , Taiwan and Philippines Today , Global Research & Data Services is going to publish several market analyses about the cement markets in Asia .",1,neutral,1,neutral
@@ -219,7 +219,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 40,Tiimari operates 194 stores in six countries -- including its core Finnish market -- and generated a turnover of 76.5 mln eur in 2005 .,1,neutral,1,neutral
 1724,"The Board established a Remuneration Committee with following members : - Sari Baldauf Chairman - Tapio Hintikka - Heikki Westerlund In addition , the Board decided to appoint a Nomination Committee at a later stage .",1,neutral,1,neutral
 859,"4 February 2011 - Finnish broadband data communication systems provider Teleste Oyj HEL : TLT1V said Wednesday its net profit rocketed to EUR4 .8 m in 2010 from EUR416 ,000 in 2009 and it lifted its dividend proposal .",2,positive,2,positive
-835,Net profit was 35.5 mln compared with 29.8 mln .,2,positive,0,negative
+835,Net profit was 35.5 mln compared with 29.8 mln .,2,positive,2,positive
 1567,Why not give your bedroom a cool makeover for summer .,1,neutral,1,neutral
 846,"Systeemitiimi 's sales and project resources will also be strengthened , director Paul Skogberg said .",2,positive,2,positive
 493,"CapMan Plc Press Release 31 March 2008 Jukka Ruuska , President of the OMX Nordic Exchanges and the Stockholm Stock Exchange , will transfer to CapMan effective no later than September 2008 .",1,neutral,1,neutral
@@ -255,7 +255,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1201,"Cramo is a service company specialising in construction machinery and equipment rental and rental-related services , as well as the rental and sale of modular space .",1,neutral,1,neutral
 2190,"Group EBIT for the first half was EUR13 .6 m US$ 17.8 m , falling short of the EUR22 .5 m it posted for the same period of 2009 .",0,negative,0,negative
 1150,"According to HK Ruokatalo , almost all the meat used by the company comes from Finland .",1,neutral,1,neutral
-1862,"In the third quarter of fiscal 2008 Efore swung to a net loss of EUR 400,000 versus a net profit of EUR 200,000 for the corresponding period of fiscal 2007 .",0,negative,0,negative
+1862,"In the third quarter of fiscal 2008 Efore swung to a net loss of EUR 400,000 versus a net profit of EUR 200,000 for the corresponding period of fiscal 2007 .",0,negative,2,positive
 945,"Consisting of seven interconnected units , Mega Image 's logistics center will be 347 metres in length and 12 metres in height .",1,neutral,1,neutral
 688,"The Annual General Meeting approved that the yearly remuneration for the members of the Board of Directors shall remain at EUR 40.000 for the Chairman of the Board , EUR 30.000 for the Deputy Chairman of the Board and EUR 20.000 for other members of the Board .",1,neutral,1,neutral
 110,Diluted EPS rose to EUR3 .68 from EUR0 .50 .,2,positive,2,positive
@@ -334,7 +334,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 1436,The financial statements release will be available after publishing on the Company 's internet pages at www.cargotec.com .,1,neutral,1,neutral
 1180,"BasWare Invoice Processing , BasWare Contract Matching , BasWare Order Matching and BasWare KPI Reporting Tool are part of the BasWare 's Enterprise Purchase to Pay product suite .",1,neutral,1,neutral
 1052,"The company 's plant in Russia will continue to make tyres for its near markets , while the plant in Nokia in Finland will manufacture tyres for other markets .",1,neutral,1,neutral
-1349,"Sampo Housing Loan Bank , a unit of Finland 's Sampo Bank , has priced its EUR1bn ( USD1 .3 bn ) bond at 99.889 % , Reuters reported .",1,neutral,1,neutral
+1349,"Sampo Housing Loan Bank , a unit of Finland 's Sampo Bank , has priced its EUR1bn ( USD1 .3 bn ) bond at 99.889 % , Reuters reported .",1,neutral,2,positive
 347,"2009 3 February 2010 - Finland-based steel maker Rautaruukki Oyj ( HEL : RTRKS ) , or Ruukki , said today it slipped to a larger-than-expected pretax loss of EUR46m in the fourth quarter of 2009 from a year-earlier profit of EUR45m .",0,negative,0,negative
 1939,"A total of 1,800,000 stock options were issued in the 2003 stock option scheme .",1,neutral,1,neutral
 1638,"For 2009 , net profit was EUR3m and the company paid a dividend of EUR1 .30 apiece .",1,neutral,1,neutral
@@ -352,7 +352,7 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 450,This resulted in improved sales figures in Sweden .,2,positive,2,positive
 1370,Terms were not disclosed .,1,neutral,1,neutral
 372,"ADP News - Apr 22 , 2009 - Finnish business information systems developer Solteq Oyj HEL : STQ1V said today its net loss widened to EUR 189,000 USD 245,000 for the first quarter of 2009 from EUR 10,000 for the same peri",0,negative,2,positive
-1945,Atria said its offer would give the Swedish company continued ownership and control of its slaughtering and cutting operations .,1,neutral,1,neutral
+1945,Atria said its offer would give the Swedish company continued ownership and control of its slaughtering and cutting operations .,1,neutral,2,positive
 1821,"The tanks will be delivered to a company which is currently building a chemical tank farm in Antwerp , northern Belgium .",1,neutral,1,neutral
 86,"At the end of March 2007 , the group 's order book was at EUR 39.6 mn , up 42 % from the corresponding period in 2006 .",2,positive,2,positive
 229,Last year 's net sales rose to EUR 68.3 million from EUR 62.2 million .,2,positive,2,positive
@@ -427,9 +427,9 @@ row_id,sentence,label,label_name,distilbert_finetuned_predicted_label,distilbert
 293,Pharmaceuticals group Orion Corp reported a fall in its third-quarter earnings that were hit by larger expenditures on R&D and marketing .,0,negative,0,negative
 1886,"Operating loss totalled EUR 4.0 mn , compared to a profit of EUR 8.6 mn in the second quarter of 2008 .",0,negative,0,negative
 1705,"Quartal Oy now owns 2,094,063 shares in Satama Interactive Plc , which represents 5,19 per cent of the share capital and voting rights .",1,neutral,1,neutral
-811,Viking Line manages well with its current ferries .,2,positive,1,neutral
+811,Viking Line manages well with its current ferries .,2,positive,2,positive
 2212,"Operating profit totalled EUR 9.6 mn , down from EUR 42.0 mn the year before .",0,negative,0,negative
-337,The new factory working model and reorganisations would decrease Nokian Tyres ' costs in the factory by EUR 30 million ( USD 38.7 m ) .,2,positive,2,positive
+337,The new factory working model and reorganisations would decrease Nokian Tyres ' costs in the factory by EUR 30 million ( USD 38.7 m ) .,2,positive,0,negative
 854,This will bring cost savings of about EUR 3mn a year .,2,positive,2,positive
 1007,"Paychex has more than 100 offices serving approximately 554,000 payroll clients nationwide as of May 31 , 2009 .",1,neutral,1,neutral
 1156,After 1 April 2007 Cencorp will not have any own employees in the territory .,1,neutral,1,neutral
