@@ -1,19 +1,16 @@
-# Diploma NLP Project
+# Diploma NLP Project — Financial Sentiment Analysis
 
-## Step 1: Load and Inspect the Dataset
+This project compares NLP models on the Financial PhraseBank dataset for three-class sentiment classification.
 
-Run:
+It evaluates:
 
-```bash
-conda run -n diplomska-nlp python 01_load_dataset.py
-```
+- a general-purpose binary sentiment baseline,
+- FinBERT (domain-specific),
+- a multilingual BERT star-rating baseline,
+- fine-tuned DistilBERT,
+- fine-tuned BERT-large,
 
-This loads the Financial PhraseBank dataset and prints:
-
-- the dataset structure
-- the first rows
-- label counts
-- readable label names
+and includes controlled experiments on epoch count and training-data size, a presentation-asset generator (confusion matrices, architecture diagram, summary), and a Streamlit demo app for live comparison.
 
 Labels:
 
@@ -23,213 +20,9 @@ Labels:
 2 = positive
 ```
 
-## Step 2: Split the Dataset
+## Project Structure
 
-The same script also splits the dataset into:
-
-```text
-80% training data
-20% testing data
-```
-
-The split uses:
-
-- `random_state=42` so the result is reproducible
-- `stratify=df["label"]` so the label balance is preserved
-
-Expected sizes:
-
-```text
-Train size: 1811
-Test size: 453
-```
-
-## Step 3: Run a Baseline Sentiment Model
-
-The same script also loads a pretrained Hugging Face sentiment model:
-
-```python
-classifier = pipeline("sentiment-analysis")
-```
-
-It tests:
-
-- one custom financial sentence
-- 20 random sentences from the test set
-
-This first baseline model predicts only:
-
-```text
-POSITIVE
-NEGATIVE
-```
-
-That is okay for this step. The goal is only to confirm that a pretrained model can read the dataset sentences and return predictions.
-
-## Step 4: Calculate Accuracy
-
-The script compares:
-
-```text
-true dataset label vs model prediction
-```
-
-The baseline model predicts `POSITIVE` and `NEGATIVE`, so the script maps them to dataset labels:
-
-```text
-NEGATIVE -> 0
-POSITIVE -> 2
-```
-
-Then it calculates accuracy on the 20-sentence sample.
-
-## Step 5: Use FinBERT
-
-The script also loads a financial-domain sentiment model:
-
-```python
-finbert = pipeline("sentiment-analysis", model="ProsusAI/finbert")
-```
-
-FinBERT predicts:
-
-```text
-negative
-neutral
-positive
-```
-
-The script maps those labels to the dataset format:
-
-```text
-negative -> 0
-neutral -> 1
-positive -> 2
-```
-
-Then it calculates FinBERT accuracy on the same 20-sentence sample.
-
-## Step 6: Evaluate Both Models on the Full Test Dataset
-
-The script now runs both models on all test sentences:
-
-```text
-453 test sentences
-```
-
-It calculates:
-
-```text
-General Model Accuracy
-FinBERT Accuracy
-```
-
-This gives the first real full-test comparison between a general sentiment model and a financial-domain model.
-
-## Step 7: Calculate Precision, Recall, and F1-Score
-
-The script now prints a classification report for both models:
-
-```python
-classification_report(true_labels_full, predicted_labels)
-```
-
-This includes:
-
-- precision
-- recall
-- F1-score
-- support
-
-The report is printed separately for:
-
-```text
-General Model Report
-FinBERT Report
-```
-
-## Step 8: Create a Results Table
-
-The script creates a comparison table with:
-
-- accuracy
-- weighted precision
-- weighted recall
-- weighted F1-score
-
-The table is saved to:
-
-```text
-results/model_comparison.csv
-```
-
-## Step 9: Create Graphs
-
-The script creates two bar charts:
-
-```text
-results/accuracy_comparison.png
-results/f1_score_comparison.png
-```
-
-These graphs compare:
-
-- model accuracy
-- model F1-score
-
-## Step 10: Measure Inference Time
-
-The script measures how long each model takes to process the full test dataset.
-
-It adds this column to the comparison table:
-
-```text
-Time (seconds)
-```
-
-This makes it possible to compare:
-
-```text
-accuracy vs speed
-```
-
-## Step 11: Measure Memory Usage
-
-The script measures memory usage during full-test inference.
-
-It adds this column to the comparison table:
-
-```text
-Memory (MB)
-```
-
-This helps compare model resource usage, not only accuracy and speed.
-
-## Step 12: Save Predictions and Results
-
-The script saves full test-set predictions to:
-
-```text
-results/predictions.csv
-```
-
-It also keeps saving the final comparison table to:
-
-```text
-results/model_comparison.csv
-```
-
-The predictions file includes:
-
-- original sentence
-- true label
-- general model prediction
-- BERT prediction
-- FinBERT prediction
-
-## Step 13: Clean Project Structure
-
-The project is now split into clear files:
+The project is split into clear files:
 
 ```text
 01_data.py
@@ -237,16 +30,40 @@ The project is now split into clear files:
 03_finbert_model.py
 04_bert_model.py
 04_bert_large_model.py
+05_evaluation.py
 05_train_distilbert.py
 06_evaluate_finetuned_distilbert.py
-07_train_bert_large.py
-05_evaluation.py
 06_results.py
-07_finetune_distilbert.py
+07_train_bert_large.py
+08_experiment_epochs.py
+09_experiment_data_size.py
+10_generate_experiment_graphs.py
+11_generate_presentation_assets.py
+app.py
 
 data/
 models/
 results/
+```
+
+Each file has one responsibility:
+
+```text
+01_data.py                          Load dataset and create train/test split
+02_general_model.py                 Run the general sentiment model (binary baseline)
+03_finbert_model.py                 Run FinBERT
+04_bert_model.py                    Run the multilingual BERT star-rating baseline
+04_bert_large_model.py              Load bert-large-cased for sequence classification (smoke test)
+05_evaluation.py                    Combine predictions and compute classification reports
+05_train_distilbert.py              Fine-tune DistilBERT on Financial PhraseBank
+06_evaluate_finetuned_distilbert.py Reload and evaluate the saved fine-tuned DistilBERT
+06_results.py                       Build the final comparison table and graphs
+07_train_bert_large.py              Fine-tune bert-large-cased on Financial PhraseBank
+08_experiment_epochs.py             DistilBERT epoch-count experiment
+09_experiment_data_size.py          DistilBERT training-data-size experiment
+10_generate_experiment_graphs.py    Regenerate improved graphs from experiment CSVs
+11_generate_presentation_assets.py  Confusion matrices, architecture diagram, analysis summary
+app.py                              Streamlit demo app
 ```
 
 Run the structured pipeline in this order:
@@ -258,27 +75,12 @@ conda run -n diplomska-nlp python 03_finbert_model.py
 conda run -n diplomska-nlp python 04_bert_model.py
 conda run -n diplomska-nlp python 05_train_distilbert.py
 conda run -n diplomska-nlp python 06_evaluate_finetuned_distilbert.py
-conda run -n diplomska-nlp python 07_train_bert_large.py
+conda run --no-capture-output -n diplomska-nlp python 07_train_bert_large.py
 conda run -n diplomska-nlp python 05_evaluation.py
 conda run -n diplomska-nlp python 06_results.py
-conda run -n diplomska-nlp python 07_finetune_distilbert.py
 ```
 
-Each file has one responsibility:
-
-```text
-01_data.py           Load dataset and create train/test split
-02_general_model.py  Run the general sentiment model
-03_finbert_model.py  Run FinBERT
-04_bert_model.py     Run the sentiment-ready BERT star-rating baseline
-04_bert_large_model.py  Load bert-large-cased for sequence classification
-05_train_distilbert.py  Fine-tune DistilBERT for sequence classification
-06_evaluate_finetuned_distilbert.py  Evaluate the saved fine-tuned DistilBERT
-07_train_bert_large.py  Fine-tune bert-large-cased for sequence classification
-05_evaluation.py     Calculate metrics and save predictions
-06_results.py        Create final table and graphs
-07_finetune_distilbert.py  Fine-tune DistilBERT on Financial PhraseBank
-```
+The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.
 
 ## Step 14: Add BERT as the Larger Model
 
@@ -332,31 +134,6 @@ General Model
 BERT
 FinBERT
 ```
-
-## Step 17: Fine-Tune DistilBERT
-
-The project now trains a small model on the Financial PhraseBank training data:
-
-```text
-distilbert-base-uncased
-```
-
-Run:
-
-```bash
-conda run -n diplomska-nlp python 07_finetune_distilbert.py
-```
-
-This script saves:
-
-```text
-models/distilbert_finetuned/
-results/distilbert_finetuned_predictions.csv
-results/distilbert_finetuned_training_history.csv
-results/distilbert_finetuned_eval.json
-```
-
-This step checks whether a small model improves after being trained on the financial sentiment dataset.
 
 ## Step 18: Add BERT-Large Sequence Classification
 
@@ -708,4 +485,3 @@ results/analysis_summary.md
 ```
 
 The Streamlit UI displays these in the `Analysis` tab.
-# diplomska-nlp
