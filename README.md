@@ -40,6 +40,7 @@ The project is split into clear files:
 10_generate_experiment_graphs.py
 11_generate_presentation_assets.py
 12_validation_check.py
+13_classical_baseline.py
 app.py
 
 data/
@@ -65,6 +66,7 @@ Each file has one responsibility:
 10_generate_experiment_graphs.py    Regenerate improved graphs from experiment CSVs
 11_generate_presentation_assets.py  Confusion matrices, architecture diagram, analysis summary
 12_validation_check.py              Supplementary: verify hyperparameter choices on a held-out val set
+13_classical_baseline.py            Supplementary: TF-IDF + LogReg reference baseline for the transformers
 app.py                              Streamlit demo app
 ```
 
@@ -86,6 +88,7 @@ Optional supplementary experiments (additive — do not modify any files produce
 
 ```bash
 conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
+conda run -n diplomska-nlp python 13_classical_baseline.py
 ```
 
 The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.
