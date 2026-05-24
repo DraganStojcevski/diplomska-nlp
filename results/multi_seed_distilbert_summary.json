@@ -1,0 +1,92 @@
+{
+  "model": "Fine-tuned DistilBERT (multi-seed)",
+  "base_model_name": "distilbert-base-uncased",
+  "purpose": "Estimate variance of the headline DistilBERT FT result across multiple random seeds so the single-seed number can be qualified honestly.",
+  "hyperparameters": {
+    "num_epochs": 3,
+    "batch_size": 8,
+    "learning_rate": 2e-05,
+    "max_length": 128
+  },
+  "device": "mps",
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "num_runs": 5,
+  "total_time_seconds": 840.5995359420776,
+  "accuracy": {
+    "mean": 0.96158940397351,
+    "std": 0.0061652273923925,
+    "min": 0.9514348785871964,
+    "max": 0.9668874172185431
+  },
+  "f1_weighted": {
+    "mean": 0.9620486799149701,
+    "std": 0.005919461879724452,
+    "min": 0.9523713529758551,
+    "max": 0.9672204023661106
+  },
+  "f1_macro": {
+    "mean": 0.947122940725303,
+    "std": 0.009802651132905156,
+    "min": 0.9318736394314854,
+    "max": 0.9556511516748699
+  },
+  "training_time_seconds": {
+    "mean": 163.76207008361817,
+    "std": 18.26645367034441,
+    "min": 143.45651769638062,
+    "max": 189.651508808136
+  },
+  "per_seed": [
+    {
+      "accuracy": 0.9646799116997793,
+      "f1_weighted": 0.9650182709729921,
+      "f1_macro": 0.9556511516748699,
+      "precision_weighted": 0.9659706470634845,
+      "recall_weighted": 0.9646799116997793,
+      "seed": 42,
+      "training_time_seconds": 143.45651769638062
+    },
+    {
+      "accuracy": 0.9668874172185431,
+      "f1_weighted": 0.9672204023661106,
+      "f1_macro": 0.9545911728503604,
+      "precision_weighted": 0.9681331232071395,
+      "recall_weighted": 0.9668874172185431,
+      "seed": 1,
+      "training_time_seconds": 150.0635211467743
+    },
+    {
+      "accuracy": 0.9514348785871964,
+      "f1_weighted": 0.9523713529758551,
+      "f1_macro": 0.9318736394314854,
+      "precision_weighted": 0.9548203387315191,
+      "recall_weighted": 0.9514348785871964,
+      "seed": 2,
+      "training_time_seconds": 163.85072994232178
+    },
+    {
+      "accuracy": 0.9602649006622517,
+      "f1_weighted": 0.9606070931940955,
+      "f1_macro": 0.9433550581602158,
+      "precision_weighted": 0.9613077264099436,
+      "recall_weighted": 0.9602649006622517,
+      "seed": 3,
+      "training_time_seconds": 171.78807282447815
+    },
+    {
+      "accuracy": 0.9646799116997793,
+      "f1_weighted": 0.9650262800657972,
+      "f1_macro": 0.950143681509584,
+      "precision_weighted": 0.9666357116910637,
+      "recall_weighted": 0.9646799116997793,
+      "seed": 4,
+      "training_time_seconds": 189.651508808136
+    }
+  ]
+}

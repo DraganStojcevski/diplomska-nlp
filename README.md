@@ -42,6 +42,7 @@ The project is split into clear files:
 12_validation_check.py
 13_classical_baseline.py
 14_macro_f1_report.py
+15_multi_seed_distilbert.py
 app.py
 
 data/
@@ -69,6 +70,7 @@ Each file has one responsibility:
 12_validation_check.py              Supplementary: verify hyperparameter choices on a held-out val set
 13_classical_baseline.py            Supplementary: TF-IDF + LogReg reference baseline for the transformers
 14_macro_f1_report.py               Supplementary: per-class + macro F1 across all models (honesty on imbalance)
+15_multi_seed_distilbert.py         Supplementary: 5-seed DistilBERT FT for mean ± std variance estimates
 app.py                              Streamlit demo app
 ```
 
@@ -92,6 +94,7 @@ Optional supplementary experiments (additive — do not modify any files produce
 conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
 conda run -n diplomska-nlp python 13_classical_baseline.py
 conda run -n diplomska-nlp python 14_macro_f1_report.py
+conda run --no-capture-output -n diplomska-nlp python 15_multi_seed_distilbert.py
 ```
 
 The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.
