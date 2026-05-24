@@ -1,82 +1,46 @@
-# Diploma NLP Project — Financial Sentiment Analysis
+# Performance Comparison Between Small Language Models and Large Language Models for Natural Language Processing Tasks
 
-This project compares NLP models on the Financial PhraseBank dataset for three-class sentiment classification.
+> Bachelor thesis · practical implementation and empirical analysis  
+> Author **Dragan Stojchevski** · Software Engineering and Innovation
 
-It evaluates:
+A layered empirical study comparing **classical**, **small fine-tuned**, **domain-pretrained**, and **large fine-tuned** language models on three-class financial sentiment classification. Uses the Financial PhraseBank dataset (`sentences_allagree`, 2,264 sentences; same 80/20 stratified split for every model).
 
-- a general-purpose binary sentiment baseline,
-- FinBERT (domain-specific),
-- a multilingual BERT star-rating baseline,
-- fine-tuned DistilBERT,
-- fine-tuned BERT-large,
+The study runs an initial four-model comparison, two controlled experiments (epoch sweep, dataset-size sweep), and six supplementary methodology experiments (held-out validation, classical baseline, macro-F1, multi-seed variance, BERT-large retraining, and McNemar significance tests).
 
-and includes controlled experiments on epoch count and training-data size, plus a presentation-asset generator (confusion matrices, architecture diagram, summary).
+---
 
-Labels:
+## Headline finding
 
-```text
-0 = negative
-1 = neutral
-2 = positive
+> **Bigger is fragile, and, when handled, leads.** Large transformer models are more sensitive to hyperparameter choice than smaller ones. With default hyperparameters that work for smaller models, BERT-large collapses to predicting only the majority class; with a 4× lower learning rate and linear warmup, the same architecture reaches the highest accuracy in the study. Smaller fine-tuned and domain-pretrained models cluster slightly below it in raw accuracy, are statistically indistinguishable from it at this sample size, and are far less fragile to set up.
+
+## Results
+
+All numbers on the same 453-sentence stratified test set.
+
+| Model | Accuracy | F1 macro | Inference | Notes |
+|---|---:|---:|---:|---|
+| General Model (binary baseline) | 25.4% | 24.4% | 7.0 s | Cannot predict the neutral class |
+| TF-IDF + Logistic Regression | **86.5%** | **80.5%** | **0.008 s** | Classical reference; ~700× faster than transformers |
+| FinBERT | 96.9% | 96.3% | 8.3 s | Domain pretraining, no fine-tuning |
+| Fine-tuned DistilBERT (multi-seed) | 96.2 ± 0.6% | 94.7 ± 1.0% | 5.6 s | Mean ± std over 5 seeds |
+| Fine-tuned BERT-large (original) | 61.4% | 25.4% | 15.7 s | Collapsed to all-neutral (training artifact) |
+| **Fine-tuned BERT-large (retrained)** | **98.5%** | **98.0%** | — | LR 5e-6 + linear warmup, Colab T4 |
+
+**McNemar pairwise tests (n = 453):** the three top transformers — BERT-large retrained (98.5%), DistilBERT FT (~96–97%), and FinBERT (96.9%) — are statistically indistinguishable from each other (all pairwise *p* > 0.05). All three significantly outperform the classical baseline (all pairwise *p* < 0.001).
+
+---
+
+## Setup
+
+```bash
+conda create -n diplomska-nlp python=3.11
+conda activate diplomska-nlp
+pip install -r requirements.txt
 ```
 
-## Project Structure
+## Run order
 
-The project is split into clear files:
-
-```text
-01_data.py
-02_general_model.py
-03_finbert_model.py
-04_bert_model.py
-04_bert_large_model.py
-05_evaluation.py
-05_train_distilbert.py
-06_evaluate_finetuned_distilbert.py
-06_results.py
-07_train_bert_large.py
-08_experiment_epochs.py
-09_experiment_data_size.py
-10_generate_experiment_graphs.py
-11_generate_presentation_assets.py
-12_validation_check.py
-13_classical_baseline.py
-14_macro_f1_report.py
-15_multi_seed_distilbert.py
-16_bert_large_retrain.py
-17_significance_and_errors.py
-
-data/
-models/
-results/
-```
-
-Each file has one responsibility:
-
-```text
-01_data.py                          Load dataset and create train/test split
-02_general_model.py                 Run the general sentiment model (binary baseline)
-03_finbert_model.py                 Run FinBERT
-04_bert_model.py                    Run the multilingual BERT star-rating baseline
-04_bert_large_model.py              Load bert-large-cased for sequence classification (smoke test)
-05_evaluation.py                    Combine predictions and compute classification reports
-05_train_distilbert.py              Fine-tune DistilBERT on Financial PhraseBank
-06_evaluate_finetuned_distilbert.py Reload and evaluate the saved fine-tuned DistilBERT
-06_results.py                       Build the final comparison table and graphs
-07_train_bert_large.py              Fine-tune bert-large-cased on Financial PhraseBank
-08_experiment_epochs.py             DistilBERT epoch-count experiment
-09_experiment_data_size.py          DistilBERT training-data-size experiment
-10_generate_experiment_graphs.py    Regenerate improved graphs from experiment CSVs
-11_generate_presentation_assets.py  Confusion matrices, architecture diagram, analysis summary
-12_validation_check.py              Supplementary: verify hyperparameter choices on a held-out val set
-13_classical_baseline.py            Supplementary: TF-IDF + LogReg reference baseline for the transformers
-14_macro_f1_report.py               Supplementary: per-class + macro F1 across all models (honesty on imbalance)
-15_multi_seed_distilbert.py         Supplementary: 5-seed DistilBERT FT for mean ± std variance estimates
-16_bert_large_retrain.py            Supplementary: BERT-large retrain with corrected hyperparameters (LR 5e-6 + warmup) — intended for Colab/GPU
-17_significance_and_errors.py       Supplementary: pairwise McNemar tests + per-model error analysis on saved predictions
-```
-
-Run the structured pipeline in this order:
+**Main pipeline** (initial four-model comparison + two original controlled experiments):
 
 ```bash
 conda run -n diplomska-nlp python 01_data.py
@@ -88,9 +52,13 @@ conda run -n diplomska-nlp python 06_evaluate_finetuned_distilbert.py
 conda run --no-capture-output -n diplomska-nlp python 07_train_bert_large.py
 conda run -n diplomska-nlp python 05_evaluation.py
 conda run -n diplomska-nlp python 06_results.py
+conda run --no-capture-output -n diplomska-nlp python 08_experiment_epochs.py
+conda run --no-capture-output -n diplomska-nlp python 09_experiment_data_size.py
+conda run -n diplomska-nlp python 10_generate_experiment_graphs.py
+conda run -n diplomska-nlp python 11_generate_presentation_assets.py
 ```
 
-Optional supplementary experiments (additive — do not modify any files produced by the main pipeline):
+**Supplementary methodology experiments** (all additive — they read existing outputs and write new files; nothing in `data/`, `models/`, or pre-existing `results/*` files is modified):
 
 ```bash
 conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
@@ -100,348 +68,87 @@ conda run --no-capture-output -n diplomska-nlp python 15_multi_seed_distilbert.p
 conda run -n diplomska-nlp python 17_significance_and_errors.py
 ```
 
-`16_bert_large_retrain.py` is intended for Colab/GPU (340M-parameter
-training is too heavy for local CPU/MPS in a reasonable time). On Colab
-with a T4 runtime, expect ~10–15 minutes; on local MPS, expect ~90+
-minutes with possible OOM.
+`16_bert_large_retrain.py` is intended for Colab/GPU (~10–15 min on T4). On local Apple MPS expect ~90+ min with possible memory pressure.
 
-The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.
+---
 
-## Step 14: Add BERT as the Larger Model
-
-The project now includes a third model:
+## Project structure
 
 ```text
-nlptown/bert-base-multilingual-uncased-sentiment
+.
+├── 01_data.py                          Load dataset, create stratified train/test split
+├── 02_general_model.py                 Run the generic binary sentiment baseline
+├── 03_finbert_model.py                 Run FinBERT (domain pretraining)
+├── 04_bert_model.py                    Run the multilingual BERT star-rating baseline
+├── 04_bert_large_model.py              Load bert-large-cased (smoke test)
+├── 05_evaluation.py                    Combine predictions, compute classification reports
+├── 05_train_distilbert.py              Fine-tune DistilBERT on Financial PhraseBank
+├── 06_evaluate_finetuned_distilbert.py Reload and evaluate the saved fine-tuned DistilBERT
+├── 06_results.py                       Final comparison table + headline graphs
+├── 07_train_bert_large.py              Fine-tune bert-large-cased (original recipe)
+├── 08_experiment_epochs.py             DistilBERT epoch-count experiment
+├── 09_experiment_data_size.py          DistilBERT training-data-size experiment
+├── 10_generate_experiment_graphs.py    Regenerate improved graphs from experiment CSVs
+├── 11_generate_presentation_assets.py  Confusion matrices, architecture diagram, summary
+│
+├── 12_validation_check.py              Held-out validation verification of epoch choice
+├── 13_classical_baseline.py            TF-IDF + Logistic Regression reference baseline
+├── 14_macro_f1_report.py               Macro F1 and per-class F1 across all models
+├── 15_multi_seed_distilbert.py         5-seed variance estimate of DistilBERT FT
+├── 16_bert_large_retrain.py            BERT-large retrain with corrected hyperparameters (Colab)
+├── 17_significance_and_errors.py       McNemar pairwise tests + per-model error analysis
+│
+├── data/                               train.csv, test.csv
+├── models/                             Local fine-tuned model artifacts (not committed)
+├── results/                            Predictions, metrics, graphs, analysis outputs
+│
+├── requirements.txt                    Python dependencies
+├── README.md                           This file
+├── THESIS_DRAFT.md                     Thesis write-up (Markdown)
+└── THESIS_DRAFT.docx                   Thesis write-up (Word, regenerated from MD via pandoc)
 ```
 
-This model returns star labels:
+---
 
-```text
-1 star
-2 stars
-3 stars
-4 stars
-5 stars
-```
+## What lands in `results/`
 
-The script maps them into the dataset labels:
+| File | Contents |
+|---|---|
+| `model_comparison.csv` | Original four-model headline table (accuracy, precision, recall, F1, time, memory) |
+| `model_comparison_extended.csv` | Same plus the classical baseline row |
+| `multi_seed_distilbert_summary.json` | Per-seed and aggregate (mean ± std) DistilBERT FT metrics |
+| `bert_large_retrain_eval.json` | Colab T4 result of the corrected BERT-large retraining |
+| `validation_check_summary.json` | Held-out val per-epoch + best-epoch selection |
+| `macro_f1_comparison.csv` | Weighted vs macro F1 and per-class F1 for every model |
+| `mcnemar_results.csv` | Pairwise McNemar test results with p-values and verdicts |
+| `error_analysis.csv` | Test sentences misclassified by at least one of the top three transformers |
+| `analysis_summary.md` | Auto-generated narrative summary |
+| `final_accuracy.png`, `final_f1.png`, `final_time.png` | Headline comparison charts |
+| `confusion_matrix_*.png` | Per-model confusion matrices |
+| `experiment_epochs_*`, `experiment_data_size_*` | Charts for the two original controlled experiments |
 
-```text
-1 star       -> 0 negative
-2 or 3 stars -> 1 neutral
-4 or 5 stars -> 2 positive
-```
+---
 
-The comparison now contains:
+## Companion materials
 
-```text
-General Model
-BERT
-FinBERT
-```
+- **`THESIS_DRAFT.md` / `.docx`** in this repo — the full thesis write-up, including the layered methodology chapter (§11) that documents every supplementary experiment.
+- **`diplomska-presentation/`** (separate repo on Desktop) — React-based defense deck with the live demo, comparison panels, and the headline finding.
 
-## Step 16: Create Graphs for All Models
+---
 
-The results script creates four graphs:
+## Reproducibility
 
-```text
-results/accuracy_comparison.png
-results/f1_score_comparison.png
-results/time_comparison.png
-results/memory_comparison.png
-```
+- All scripts seed at `random_state=42` (and per-seed for the multi-seed experiment).
+- The train/test split is saved to `data/train.csv` and `data/test.csv` so every model evaluates on identical examples.
+- Supplementary experiments write to new output files only — they never modify the original `model_comparison.csv` or any other artifact from the main pipeline.
 
-These graphs compare all three models:
+---
 
-```text
-General Model
-BERT
-FinBERT
-```
+## References
 
-## Step 18: Add BERT-Large Sequence Classification
-
-The project now includes the true large model requested for the дипломска:
-
-```text
-bert-large-cased
-```
-
-The loader is in:
-
-```text
-04_bert_large_model.py
-```
-
-This file uses:
-
-```python
-AutoTokenizer.from_pretrained("bert-large-cased")
-AutoModelForSequenceClassification.from_pretrained(
-    "bert-large-cased",
-    num_labels=3
-)
-```
-
-This model is not used with `pipeline("sentiment-analysis")`, because it is not already trained for financial sentiment. The next step is to fine-tune it on the Financial PhraseBank dataset.
-
-Optional loader smoke test:
-
-```bash
-conda run -n diplomska-nlp python 04_bert_large_model.py
-```
-
-This command may download a large model the first time it runs.
-
-## Step 19: Fine-Tune DistilBERT for Sequence Classification
-
-The project now has a clean small-model training file:
-
-```text
-05_train_distilbert.py
-```
-
-It trains:
-
-```text
-distilbert-base-uncased
-```
-
-on the Financial PhraseBank training split and saves the trained model to:
-
-```text
-models/distilbert-finetuned/
-```
-
-It also saves:
-
-```text
-results/distilbert_finetuned_predictions.csv
-results/distilbert_finetuned_training_history.csv
-results/distilbert_finetuned_eval.json
-```
-
-Run:
-
-```bash
-conda run -n diplomska-nlp python 05_train_distilbert.py
-```
-
-## Step 20: Evaluate Fine-Tuned DistilBERT
-
-The project now reloads the saved small model from disk:
-
-```text
-models/distilbert-finetuned/
-```
-
-The evaluation file is:
-
-```text
-06_evaluate_finetuned_distilbert.py
-```
-
-It calculates:
-
-```text
-Accuracy
-Precision
-Recall
-F1-score
-```
-
-and saves:
-
-```text
-results/distilbert_finetuned_loaded_predictions.csv
-results/distilbert_finetuned_loaded_eval.json
-```
-
-Run:
-
-```bash
-conda run -n diplomska-nlp python 06_evaluate_finetuned_distilbert.py
-```
-
-## Step 21: Fine-Tune BERT-Large
-
-The project now has a large-model training file:
-
-```text
-07_train_bert_large.py
-```
-
-It trains:
-
-```text
-bert-large-cased
-```
-
-on the same Financial PhraseBank training split. Because BERT-large is much heavier than DistilBERT, this file uses:
-
-```text
-batch_size = 2
-max_length = 128
-num_epochs = 3
-gradient checkpointing
-```
-
-It saves the trained model to:
-
-```text
-models/bert-large-finetuned/
-```
-
-It also saves:
-
-```text
-results/bert_large_finetuned_predictions.csv
-results/bert_large_finetuned_training_history.csv
-results/bert_large_finetuned_eval.json
-```
-
-Run:
-
-```bash
-conda run --no-capture-output -n diplomska-nlp python 07_train_bert_large.py
-```
-
-The `--no-capture-output` option is recommended for this step because BERT-large training is slow and you should see progress logs while it runs.
-
-## Step 22: Add Fine-Tuned Models to Final Results
-
-The final results table now compares:
-
-```text
-General Model
-Fine-tuned DistilBERT
-Fine-tuned BERT-large
-FinBERT
-```
-
-The results script reads the BERT-large Colab predictions from:
-
-```text
-results/bert_large_finetuned_predictions.csv
-```
-
-Then it updates:
-
-```text
-results/model_comparison.csv
-results/accuracy_comparison.png
-results/f1_score_comparison.png
-results/time_comparison.png
-results/memory_comparison.png
-```
-
-Run:
-
-```bash
-conda run -n diplomska-nlp python 06_results.py
-```
-
-## Step 23: Create Final Comparison Graphs
-
-The results script now creates final presentation graphs with short model names:
-
-```text
-General
-DistilBERT FT
-BERT-large
-FinBERT
-```
-
-The final graph files are:
-
-```text
-results/final_accuracy.png
-results/final_f1.png
-results/final_time.png
-```
-
-Run:
-
-```bash
-conda run -n diplomska-nlp python 06_results.py
-```
-
-## Step 27: Controlled Experiments
-
-The project now includes two deeper experiments for the дипломска analysis.
-
-Epoch experiment:
-
-```bash
-conda run --no-capture-output -n diplomska-nlp python 08_experiment_epochs.py
-```
-
-This saves:
-
-```text
-results/experiment_epochs.csv
-results/experiment_epochs_scores.png
-results/experiment_epochs_loss.png
-results/experiment_epochs_time.png
-```
-
-Dataset size experiment:
-
-```bash
-conda run --no-capture-output -n diplomska-nlp python 09_experiment_data_size.py
-```
-
-This trains DistilBERT with:
-
-```text
-25% training data
-50% training data
-75% training data
-100% training data
-```
-
-and saves:
-
-```text
-results/experiment_data_size.csv
-results/experiment_data_size_scores.png
-results/experiment_data_size_time.png
-results/experiment_data_size_efficiency.png
-```
-
-If you already have the experiment CSV files and only want to regenerate improved graphs, run:
-
-```bash
-conda run -n diplomska-nlp python 10_generate_experiment_graphs.py
-```
-
-This creates presentation-friendly versions such as:
-
-```text
-results/experiment_epochs_scores_zoomed.png
-results/experiment_epochs_loss.png
-results/experiment_epochs_time_bar.png
-results/experiment_data_size_scores_zoomed.png
-results/experiment_data_size_time_bar.png
-results/experiment_data_size_efficiency.png
-```
-
-## Step 28: Presentation Assets and Analysis
-
-The project includes a final presentation-asset script:
-
-```bash
-conda run -n diplomska-nlp python 11_generate_presentation_assets.py
-```
-
-This creates:
-
-```text
-results/confusion_matrix_finbert.png
-results/confusion_matrix_distilbert_ft.png
-results/confusion_matrix_bert_large.png
-results/architecture_diagram.png
-results/main_summary_figure.png
-results/analysis_summary.md
-```
+- **Financial PhraseBank**: Malo, P., Sinha, A., Korhonen, P., Wallenius, J., & Takala, P. (2014). *Good debt or bad debt: Detecting semantic orientations in economic texts.*
+- **BERT**: Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). *Pre-training of deep bidirectional transformers for language understanding.*
+- **DistilBERT**: Sanh, V., Debut, L., Chaumond, J., & Wolf, T. (2019). *A distilled version of BERT: smaller, faster, cheaper and lighter.*
+- **FinBERT**: Araci, D. (2019). *Financial sentiment analysis with pre-trained language models.*
+- **Transformer**: Vaswani, A. et al. (2017). *Attention is all you need.*
+- **Hugging Face Transformers**: Wolf, T. et al. (2020).
