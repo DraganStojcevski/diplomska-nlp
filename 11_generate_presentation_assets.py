@@ -85,7 +85,7 @@ def save_architecture_diagram():
         "Models\nBaseline, FinBERT,\nDistilBERT, BERT-large",
         "Fine-tuning\nDistilBERT + BERT-large",
         "Evaluation\nAccuracy, F1,\nTime, Memory",
-        "Streamlit UI\nLive Demo + Results",
+        "Reports\nTables + Charts",
     ]
 
     fig, ax = plt.subplots(figsize=(14, 3.5))
