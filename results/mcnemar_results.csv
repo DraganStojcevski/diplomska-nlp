@@ -1,0 +1,7 @@
+Model A,Model B,"A right, B wrong (b)","A wrong, B right (c)",Disagreements,p-value,Significant (alpha=0.05),Winner,Question
+DistilBERT FT,FinBERT,9,8,17,1.0,no,DistilBERT FT,Are these statistically equivalent? (multi-seed suggested tie)
+BERT-large retrain,DistilBERT FT,8,2,10,0.109375,no,BERT-large retrain,Does corrected BERT-large beat the small fine-tuned model?
+BERT-large retrain,FinBERT,12,5,17,0.143463134765625,no,BERT-large retrain,Does corrected BERT-large beat the domain-pretrained model?
+BERT-large retrain,Classical baseline,59,5,64,9.002816938122327e-13,yes,BERT-large retrain,Does the best transformer beat the classical floor?
+DistilBERT FT,Classical baseline,55,7,62,2.4300843108615577e-10,yes,DistilBERT FT,Does fine-tuned DistilBERT beat the classical floor?
+FinBERT,Classical baseline,58,11,69,7.555829742748269e-09,yes,FinBERT,Does FinBERT beat the classical floor?

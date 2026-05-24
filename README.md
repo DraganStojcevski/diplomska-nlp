@@ -44,6 +44,7 @@ The project is split into clear files:
 14_macro_f1_report.py
 15_multi_seed_distilbert.py
 16_bert_large_retrain.py
+17_significance_and_errors.py
 app.py
 
 data/
@@ -73,6 +74,7 @@ Each file has one responsibility:
 14_macro_f1_report.py               Supplementary: per-class + macro F1 across all models (honesty on imbalance)
 15_multi_seed_distilbert.py         Supplementary: 5-seed DistilBERT FT for mean ± std variance estimates
 16_bert_large_retrain.py            Supplementary: BERT-large retrain with corrected hyperparameters (LR 5e-6 + warmup) — intended for Colab/GPU
+17_significance_and_errors.py       Supplementary: pairwise McNemar tests + per-model error analysis on saved predictions
 app.py                              Streamlit demo app
 ```
 
@@ -97,6 +99,7 @@ conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
 conda run -n diplomska-nlp python 13_classical_baseline.py
 conda run -n diplomska-nlp python 14_macro_f1_report.py
 conda run --no-capture-output -n diplomska-nlp python 15_multi_seed_distilbert.py
+conda run -n diplomska-nlp python 17_significance_and_errors.py
 ```
 
 `16_bert_large_retrain.py` is intended for Colab/GPU (340M-parameter

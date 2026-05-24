@@ -1,0 +1,25 @@
+row_id,sentence,true_label,FinBERT_pred,DistilBERT FT_pred,BERT-large retrain_pred,wrong_models,num_wrong
+345,Unit costs for flight operations fell by 6.4 percent .,positive,negative,negative,negative,"FinBERT, DistilBERT FT, BERT-large retrain",3
+1584,`` These developments partly reflect the government 's higher activity in the field of dividend policy . '',neutral,positive,positive,positive,"FinBERT, DistilBERT FT, BERT-large retrain",3
+305,"Following this increase Huhtamaki 's registered share capital is EUR360 .62 m and the number of shares outstanding is 106,063,320 .",neutral,neutral,positive,positive,"DistilBERT FT, BERT-large retrain",2
+372,"ADP News - Apr 22 , 2009 - Finnish business information systems developer Solteq Oyj HEL : STQ1V said today its net loss widened to EUR 189,000 USD 245,000 for the first quarter of 2009 from EUR 10,000 for the same peri",negative,positive,positive,negative,"FinBERT, DistilBERT FT",2
+659,"F-Secure , a developer of security solutions as a service through Internet Service Providers and mobile operators , announced results from its annual Online Wellbeing Survey .",neutral,positive,positive,neutral,"FinBERT, DistilBERT FT",2
+835,Net profit was 35.5 mln compared with 29.8 mln .,positive,positive,negative,negative,"DistilBERT FT, BERT-large retrain",2
+1496,"The repo rate will gradually reach 2 % at the end of 2010 , according to Nordea 's Economic Outlook .",neutral,positive,positive,neutral,"FinBERT, DistilBERT FT",2
+2056,"These financing arrangements will enable the company to ensure , in line with its treasury policy , that it has sufficient financial instruments at its disposal for its potential capital requirements .",positive,positive,neutral,neutral,"DistilBERT FT, BERT-large retrain",2
+9,"HELSINKI ( AFX ) - Shares closed higher , led by Nokia after it announced plans to team up with Sanyo to manufacture 3G handsets , and by Nokian Tyres after its fourth-quarter earnings report beat analysts ' expectations , dealers said .",positive,positive,negative,positive,DistilBERT FT,1
+371,"Finnish power supply solutions and systems provider Efore Oyj said its net loss widened to 3.2 mln euro $ 4.2 mln for the first quarter of fiscal 2006-2007 ending October 31 , 2007 from 900,000 euro $ 1.2 mln for the same period of fiscal 2005-06 .",negative,positive,negative,negative,FinBERT,1
+416,"Finnish flexible packaging manufacturer Suominen Corporation reports net sales of EUR 54.5 mn in the first quarter of 2008 , compared with EUR 54.3 mn a year earlier .",positive,positive,negative,positive,DistilBERT FT,1
+447,The company also said that in Poland a profitability program has been launched at the Oborniki steel frame and sandwich panel plant .,positive,positive,neutral,positive,DistilBERT FT,1
+480,These moderate but significant changes resulted in a significant 24-32 % reduction in the estimated CVD risk .,positive,positive,negative,positive,DistilBERT FT,1
+533,"According to Finnair Technical Services , the measure is above all due to the employment situation .",neutral,positive,neutral,neutral,FinBERT,1
+811,Viking Line manages well with its current ferries .,positive,positive,neutral,positive,DistilBERT FT,1
+1231,"Fortum expects its annual capital expenditure in the next four to five years to be within a range of EUR 0.8-1 .2 billion , as earlier announced .",neutral,positive,neutral,neutral,FinBERT,1
+1349,"Sampo Housing Loan Bank , a unit of Finland 's Sampo Bank , has priced its EUR1bn ( USD1 .3 bn ) bond at 99.889 % , Reuters reported .",neutral,positive,neutral,neutral,FinBERT,1
+1413,"The contract also includes installation work in a new multistorey carpark for close on 1,000 vehicles .",neutral,positive,neutral,neutral,FinBERT,1
+1587,"`` We have come out with a decision which is based on our preliminary economic , operational and environmental findings , '' Karvinen said .",neutral,positive,neutral,neutral,FinBERT,1
+1702,"Previously , the company expected its 2008 financial performance to remain at the same level as in 2008 .",neutral,positive,neutral,neutral,FinBERT,1
+1760,"The decision reflects the underutilisation of the line , which produces nonwovens used in medical and wipes applications as well as for the automotive industry .",neutral,neutral,neutral,negative,BERT-large retrain,1
+1851,"Tyrv+ñinen is of the opinion that the airline has been repeating this for some time already , however .",neutral,negative,neutral,neutral,FinBERT,1
+1945,Atria said its offer would give the Swedish company continued ownership and control of its slaughtering and cutting operations .,neutral,neutral,neutral,positive,BERT-large retrain,1
+1990,A 2001 agreement expired earlier this month .,neutral,negative,neutral,neutral,FinBERT,1
