@@ -43,6 +43,7 @@ The project is split into clear files:
 13_classical_baseline.py
 14_macro_f1_report.py
 15_multi_seed_distilbert.py
+16_bert_large_retrain.py
 app.py
 
 data/
@@ -71,6 +72,7 @@ Each file has one responsibility:
 13_classical_baseline.py            Supplementary: TF-IDF + LogReg reference baseline for the transformers
 14_macro_f1_report.py               Supplementary: per-class + macro F1 across all models (honesty on imbalance)
 15_multi_seed_distilbert.py         Supplementary: 5-seed DistilBERT FT for mean ± std variance estimates
+16_bert_large_retrain.py            Supplementary: BERT-large retrain with corrected hyperparameters (LR 5e-6 + warmup) — intended for Colab/GPU
 app.py                              Streamlit demo app
 ```
 
@@ -96,6 +98,11 @@ conda run -n diplomska-nlp python 13_classical_baseline.py
 conda run -n diplomska-nlp python 14_macro_f1_report.py
 conda run --no-capture-output -n diplomska-nlp python 15_multi_seed_distilbert.py
 ```
+
+`16_bert_large_retrain.py` is intended for Colab/GPU (340M-parameter
+training is too heavy for local CPU/MPS in a reasonable time). On Colab
+with a T4 runtime, expect ~10–15 minutes; on local MPS, expect ~90+
+minutes with possible OOM.
 
 The structured pipeline above is the canonical run order. The sections below describe how each feature was added during development.
 
