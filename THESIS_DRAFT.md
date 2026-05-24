@@ -19,8 +19,6 @@ The initial results showed that model size alone does not guarantee better perfo
 
 In addition to the initial comparison, several controlled experiments were performed: an epoch sweep, a dataset-size sweep, a held-out validation verification, a five-seed variance estimate of DistilBERT fine-tuning, a classical TF-IDF + Logistic Regression baseline as a non-transformer reference point, a macro-F1 and per-class analysis, and McNemar pairwise statistical significance tests. The epoch experiment showed that two epochs produced the best balance between performance and training cost (a choice independently confirmed by the held-out validation check). The data-size experiment showed strong improvement from 25% to 50% of the training data, with smaller gains afterward. The multi-seed run yielded 0.9616 ± 0.0062 accuracy across five seeds, qualifying the single-seed headline number as a slightly favorable draw. The classical baseline reached 0.8653 accuracy at roughly 700× faster inference, framing the transformers' added cost. The McNemar tests revealed that the three top transformer approaches (BERT-large retrained, fine-tuned DistilBERT, FinBERT) are statistically indistinguishable at n = 453 despite their numerical differences, while all three significantly outperform the classical baseline (p < 0.001).
 
-Finally, an interactive Streamlit prototype was developed. The prototype allows users to enter financial text, compare predictions from multiple models, analyze batches of sentences, view confidence scores, inspect saved results, and present the system as a practical financial sentiment intelligence tool. Therefore, the project combines research, software engineering, model evaluation, and an interactive user-facing application.
-
 **Keywords:** Natural Language Processing, Sentiment Analysis, Financial PhraseBank, DistilBERT, BERT-large, FinBERT, Small Language Models, Large Language Models, Fine-tuning, Model Evaluation
 
 ---
@@ -62,7 +60,6 @@ The main objective of this thesis is to build and evaluate a complete NLP system
 7. To compare all models using accuracy, precision, recall, F1-score, inference time, and memory usage.
 8. To perform additional controlled experiments using different numbers of training epochs and different training dataset sizes.
 9. To create graphs, confusion matrices, and analysis outputs for presentation.
-10. To develop an interactive Streamlit user interface that demonstrates the system in a practical way.
 
 ### 1.3 Research Questions
 
@@ -78,15 +75,13 @@ The thesis is guided by the following research questions:
 
 **RQ5:** How does the amount of training data affect the performance of DistilBERT?
 
-**RQ6:** Can the final system be presented as an interactive prototype useful for financial text analysis?
+**RQ6:** How much does the fine-tuned DistilBERT result vary across random seeds, and is the headline number representative of typical performance?
 
-**RQ7:** How much does the fine-tuned DistilBERT result vary across random seeds, and is the headline number representative of typical performance?
+**RQ7:** Was the BERT-large collapse a property of the model, or a training artifact that can be corrected with different hyperparameters?
 
-**RQ8:** Was the BERT-large collapse a property of the model, or a training artifact that can be corrected with different hyperparameters?
+**RQ8:** How does a classical TF-IDF + Logistic Regression baseline compare to the transformer-based models on the same test set?
 
-**RQ9:** How does a classical TF-IDF + Logistic Regression baseline compare to the transformer-based models on the same test set?
-
-**RQ10:** Are the numerical gaps between the top-performing models statistically significant on this test set, or within the noise of paired predictions?
+**RQ9:** Are the numerical gaps between the top-performing models statistically significant on this test set, or within the noise of paired predictions?
 
 ### 1.4 Thesis Contributions
 
@@ -98,12 +93,11 @@ This thesis makes several practical contributions:
 4. A larger model was shown not to be automatically better, which is an important practical conclusion.
 5. Additional experiments were performed to analyze training epochs and training dataset size.
 6. Results were saved in reusable CSV, JSON, and image formats.
-7. A Streamlit prototype was developed to demonstrate live and batch financial sentiment analysis.
-8. A held-out validation experiment confirmed that the chosen hyperparameters do not depend on test-set selection bias, addressing a methodological weakness of the original epoch sweep.
-9. A five-seed variance experiment quantified the variability of fine-tuned DistilBERT across random seeds, allowing the single-seed headline result to be reported with an honest mean ± std estimate.
-10. A classical TF-IDF + Logistic Regression baseline was added so that the transformer results can be judged against a meaningful non-transformer reference point.
-11. BERT-large was retrained with corrected hyperparameters (learning rate 5e-6 with linear warmup), reversing the original collapse and demonstrating that large model fine-tuning failures can be a training artifact rather than an inherent limitation.
-12. McNemar pairwise significance tests were applied to all key model comparisons to formalize claims about differences (or lack thereof) between models at the level of paired test-set predictions.
+7. A held-out validation experiment confirmed that the chosen hyperparameters do not depend on test-set selection bias, addressing a methodological weakness of the original epoch sweep.
+8. A five-seed variance experiment quantified the variability of fine-tuned DistilBERT across random seeds, allowing the single-seed headline result to be reported with an honest mean ± std estimate.
+9. A classical TF-IDF + Logistic Regression baseline was added so that the transformer results can be judged against a meaningful non-transformer reference point.
+10. BERT-large was retrained with corrected hyperparameters (learning rate 5e-6 with linear warmup), reversing the original collapse and demonstrating that large model fine-tuning failures can be a training artifact rather than an inherent limitation.
+11. McNemar pairwise significance tests were applied to all key model comparisons to formalize claims about differences (or lack thereof) between models at the level of paired test-set predictions.
 
 ---
 
@@ -281,7 +275,6 @@ The main files are:
 | `10_generate_experiment_graphs.py` | Regenerates experiment graphs |
 | `11_generate_presentation_assets.py` | Generates confusion matrices and presentation figures |
 | `06_results.py` | Creates the final comparison table and graphs |
-| `app.py` | Streamlit interactive user interface |
 
 The project also contains:
 
@@ -312,7 +305,6 @@ The steps are:
 7. Calculate evaluation metrics.
 8. Save predictions and metrics to files.
 9. Generate graphs and confusion matrices.
-10. Display results in the Streamlit application.
 
 This pipeline was chosen because it is clear, reproducible, and easy to explain. Every stage produces outputs that are saved and can be inspected.
 
@@ -367,7 +359,7 @@ The saved outputs include:
 - confusion matrices
 - analysis summary
 
-This makes it possible to use the results in the thesis document and in the Streamlit prototype.
+This makes it possible to reuse the results in the thesis document, in figures, in significance tests, and in any downstream analysis.
 
 ---
 
@@ -464,7 +456,7 @@ BERT-large was included to test whether a larger model provides better performan
 
 In addition to the four transformer-based models, a classical non-transformer reference point was added: a TF-IDF + Logistic Regression pipeline. The pipeline uses 1-2 grams capped at 20,000 features with sublinear term frequency scaling, followed by a standard scikit-learn `LogisticRegression` classifier (lbfgs solver, default regularization). It is trained on the same 1,811-sentence training set and evaluated on the same 453-sentence test set as the transformers.
 
-The purpose of this baseline is not to compete with the transformer models but to provide a meaningful floor against which the transformers' added cost can be judged honestly. The full results of this baseline are reported in §12.3.
+The purpose of this baseline is not to compete with the transformer models but to provide a meaningful floor against which the transformers' added cost can be judged honestly. The full results of this baseline are reported in §11.3.
 
 ---
 
@@ -630,7 +622,7 @@ This supports the idea that practical NLP model selection should consider:
 - memory usage
 - deployment needs
 
-**Important caveat.** The BERT-large result above (accuracy 0.6137 / weighted F1 0.4668) reflects the original training run with default hyperparameters. A follow-up retraining with corrected hyperparameters (§12.5) reverses this finding completely — BERT-large reaches an accuracy of 0.9845, the highest in the entire study. The initial comparison should therefore be read as a snapshot of the first training pass; the supplementary experiments in §12 substantially refine the picture.
+**Important caveat.** The BERT-large result above (accuracy 0.6137 / weighted F1 0.4668) reflects the original training run with default hyperparameters. A follow-up retraining with corrected hyperparameters (§11.5) reverses this finding completely — BERT-large reaches an accuracy of 0.9845, the highest in the entire study. The initial comparison should therefore be read as a snapshot of the first training pass; the supplementary experiments in §11 substantially refine the picture.
 
 ---
 
@@ -748,64 +740,11 @@ This is a strong example of why multiple evaluation metrics are necessary. If on
 
 ---
 
-## 11. Interactive Streamlit Prototype
-
-### 11.1 Purpose of the User Interface
-
-The project includes a Streamlit application. The purpose of the application is to make the system interactive and easier to demonstrate. Instead of only showing static results, the user can type financial text and see model predictions immediately.
-
-The prototype makes the practical part stronger because it shows that the project is not only a research experiment. It is also a working software system.
-
-### 11.2 Main Features
-
-The Streamlit UI includes:
-
-- product dashboard
-- live demo
-- model comparison
-- confidence scores
-- analyst summary
-- batch analyzer
-- final results table
-- graphs
-- epoch experiment results
-- dataset size experiment results
-- confusion matrices
-- prediction file previews
-- CSV export
-
-The live demo allows the user to enter a financial sentence such as:
-
-```text
-The company reported strong revenue growth.
-```
-
-The system then shows predictions from the available models. It displays the predicted label, confidence, and whether the models agree.
-
-### 11.3 Product-Oriented Design
-
-The UI was improved to make it feel like a financial sentiment intelligence prototype. It includes a product dashboard that explains possible use cases:
-
-- financial news monitoring
-- analyst decision support
-- automatic sentiment tagging
-- model comparison and governance
-
-The batch analyzer is especially useful because it shows how the system could be used in practice. A user can enter multiple financial sentences, analyze them together, view sentiment distribution, and export the result.
-
-### 11.4 Value of the Prototype
-
-The prototype demonstrates the practical value of the thesis. It allows the committee or a potential user to test the system directly. This helps explain the results more clearly than tables alone.
-
-The UI also connects the research part with a software engineering outcome. It shows how model evaluation can become a usable application.
-
----
-
-## 12. Supplementary Methodological Experiments
+## 11. Supplementary Methodological Experiments
 
 After the initial model comparison and the two original controlled experiments described above, several follow-up experiments were performed to strengthen the methodological rigor of the thesis and to refine the conclusions. These experiments were designed to be **additive**: they did not modify the original results, predictions, or trained model artifacts. Each new script wrote to a new set of output files, leaving the original `model_comparison.csv` and the four original prediction CSVs untouched. The new analyses are reported here as a separate chapter so that the original results remain a clean baseline against which the refinements can be read.
 
-### 12.1 Held-Out Validation Verification
+### 11.1 Held-Out Validation Verification
 
 **Purpose.** The original epoch sweep (§8) selected "two epochs" as the best choice by evaluating on the **test set** after each epoch. Strictly speaking, this uses the same data for hyperparameter selection that is later used to report the final number — a known methodological weakness. The validation-check experiment tests whether the chosen hyperparameter is robust under a stricter held-out validation regime.
 
@@ -823,7 +762,7 @@ After the initial model comparison and the two original controlled experiments d
 
 **Result.** The best epoch by validation accuracy is **2** (tied with epoch 4 at 0.9912 validation accuracy). The earlier of the two tied epochs is chosen as the principled tiebreaker (less training, less overfitting risk). This matches the choice made by the original epoch sweep on the test set. The hyperparameter selection is therefore methodologically defensible: it does not depend on test-set peeking.
 
-### 12.2 Multi-seed Variance Estimation
+### 11.2 Multi-seed Variance Estimation
 
 **Purpose.** The original headline DistilBERT FT result (0.9713 accuracy, seed 42) is a single-seed point estimate. Without an estimate of how much the result varies across random seeds, it is not possible to say whether the small gap between DistilBERT FT and FinBERT (0.9713 vs 0.9695) is meaningful or within the noise of seed variation.
 
@@ -842,7 +781,7 @@ After the initial model comparison and the two original controlled experiments d
 
 **Result.** The standard deviation of accuracy across five seeds is approximately 0.62 percentage points — **wider than the 0.2 percentage point gap** between the headline DistilBERT FT and FinBERT numbers. The single-seed 0.9713 headline is approximately 1.5σ above the multi-seed mean, which is consistent with being a slightly favorable but not statistically extreme draw from the underlying seed distribution. The "DistilBERT FT beats FinBERT" claim from §7 is therefore statistically a tie within seed variance.
 
-### 12.3 Classical Baseline Reference
+### 11.3 Classical Baseline Reference
 
 **Purpose.** The initial comparison in §7 contains only transformer-based models. To frame the transformer results against a meaningful non-transformer reference, a classical TF-IDF + Logistic Regression pipeline was added.
 
@@ -856,13 +795,13 @@ After the initial model comparison and the two original controlled experiments d
 | TF-IDF + Logistic Regression | 0.8653 | 0.8051 | 0.008 s | 35 MB |
 | Approximate difference | ~10.6 pp | ~15.6 pp | ~700× slower | ~60× heavier |
 
-**Result.** The classical baseline reaches 0.8653 accuracy at roughly 700 times faster inference and 60 times lower memory usage than the best transformer. This places the transformers' added cost in concrete engineering terms. It is also notable that the classical baseline outperforms the original (collapsed) BERT-large run by a wide margin (0.8653 vs 0.6137) and falls below the BERT-large retrain (0.9845 — see §12.5).
+**Result.** The classical baseline reaches 0.8653 accuracy at roughly 700 times faster inference and 60 times lower memory usage than the best transformer. This places the transformers' added cost in concrete engineering terms. It is also notable that the classical baseline outperforms the original (collapsed) BERT-large run by a wide margin (0.8653 vs 0.6137) and falls below the BERT-large retrain (0.9845 — see §11.5).
 
-### 12.4 Macro-F1 and Per-class Analysis
+### 11.4 Macro-F1 and Per-class Analysis
 
 **Purpose.** The final comparison in §7 reports weighted F1, which is dominated by the majority neutral class (61% of the test set). Macro F1 treats every class equally and surfaces per-class weaknesses that weighted F1 hides.
 
-**Procedure.** The script (`14_macro_f1_report.py`) recomputes per-class F1 and macro F1 from the saved prediction CSVs for all five models in the comparison (including the classical baseline from §12.3).
+**Procedure.** The script (`14_macro_f1_report.py`) recomputes per-class F1 and macro F1 from the saved prediction CSVs for all five models in the comparison (including the classical baseline from §11.3).
 
 **Table 7. Weighted vs macro F1 and per-class F1 per model**
 
@@ -881,7 +820,7 @@ After the initial model comparison and the two original controlled experiments d
 
 This analysis demonstrates that macro F1 should accompany weighted F1 when the test set is class-imbalanced, because the two metrics together can distinguish between qualitatively different failure modes that look similar under either metric alone.
 
-### 12.5 BERT-large Retraining with Corrected Hyperparameters
+### 11.5 BERT-large Retraining with Corrected Hyperparameters
 
 **Purpose.** The original BERT-large fine-tuning (§7.5) produced an accuracy of exactly 0.6137 — equal to the majority-class fraction 278/453. This is the classical signature of a training run that never escaped the initial majority-class fixed point of the cross-entropy loss. This experiment tests whether the collapse was a hyperparameter artifact rather than an inherent limitation of BERT-large for this task.
 
@@ -908,9 +847,9 @@ All other settings (batch size 2, max length 128, gradient checkpointing, seed 4
 
 This finding substantially revises the original "bigger is not better" interpretation. The honest reading is that **large models are more sensitive to hyperparameter choice than smaller models**. With default hyperparameters that work for smaller transformers, a large transformer can fail completely; with appropriately tuned hyperparameters, the same architecture can produce the best result. The engineering cost of this is real: the retraining required GPU acceleration (Colab T4) and 24.5 minutes of training, compared to roughly 2.5 minutes for DistilBERT on a local MPS device.
 
-### 12.6 McNemar Pairwise Statistical Tests
+### 11.6 McNemar Pairwise Statistical Tests
 
-**Purpose.** The numerical accuracy comparisons in this thesis invite the question of statistical significance. The multi-seed result (§12.2) already suggests that the DistilBERT FT vs FinBERT gap is within seed noise; McNemar's exact paired test gives a direct statistical answer at the level of paired test-set predictions.
+**Purpose.** The numerical accuracy comparisons in this thesis invite the question of statistical significance. The multi-seed result (§11.2) already suggests that the DistilBERT FT vs FinBERT gap is within seed noise; McNemar's exact paired test gives a direct statistical answer at the level of paired test-set predictions.
 
 **Procedure.** The script (`17_significance_and_errors.py`) applies the two-sided exact binomial McNemar test to six key model pairs on the 453-sentence test set. For each pair, the test computes `b` (number of test sentences where model A is correct and model B is wrong) and `c` (the inverse), then computes the two-sided p-value under the null hypothesis that the two classifiers have equally distributed errors.
 
@@ -932,7 +871,7 @@ This finding substantially revises the original "bigger is not better" interpret
 
 The defensible interpretation is that the three top transformer approaches are equivalent in accuracy on this test set within the statistical resolution of n = 453. What separates them in practice is not accuracy but **cost and hyperparameter risk**: BERT-large requires GPU acceleration and a non-default training recipe to converge; DistilBERT needs only standard hyperparameters and runs on a laptop; FinBERT requires no training at all but cannot be adapted further to the target task. The gap to the classical baseline (approximately 10 percentage points), in contrast, is decisive and statistically robust.
 
-### 12.7 Refined Headline Finding
+### 11.7 Refined Headline Finding
 
 Taken together, the supplementary experiments refine the headline finding of the thesis in three ways.
 
@@ -946,119 +885,119 @@ The refined headline finding of the thesis is:
 
 ---
 
-## 13. Discussion
+## 12. Discussion
 
-### 13.1 Small Models Can Match Domain-Pretrained Models
+### 12.1 Small Models Can Match Domain-Pretrained Models
 
-One of the early findings of this thesis was that fine-tuned DistilBERT achieved a slightly higher accuracy than FinBERT on the test set (0.9713 vs 0.9691). The supplementary multi-seed experiment in §12.2, and the McNemar pairwise test in §12.6, together refine that finding into a more conservative statement: DistilBERT FT and FinBERT are **statistically equivalent** on this test set within the variance produced by random seed choice.
+One of the early findings of this thesis was that fine-tuned DistilBERT achieved a slightly higher accuracy than FinBERT on the test set (0.9713 vs 0.9691). The supplementary multi-seed experiment in §11.2, and the McNemar pairwise test in §11.6, together refine that finding into a more conservative statement: DistilBERT FT and FinBERT are **statistically equivalent** on this test set within the variance produced by random seed choice.
 
 This is still a substantive result for software engineering. It shows that a smaller model can be made fully competitive with a domain-pretrained model through task-specific fine-tuning, without requiring a model that was pretrained on the target domain. In practice this matters because domain-pretrained models are not always available for every business domain, while a generic small model plus a local domain dataset are usually both accessible.
 
-### 13.2 Domain Adaptation Matters
+### 12.2 Domain Adaptation Matters
 
 FinBERT performed very well in the initial comparison. This confirms that domain adaptation is important: a model trained on financial text understands domain-specific patterns that general-domain sentiment models miss entirely. The large gap between the general sentiment model (accuracy 0.2539) and FinBERT (accuracy 0.9691) supports this conclusion strongly.
 
 The supplementary experiments do not change this finding. The two routes to "domain knowledge" — domain pretraining (FinBERT) and generic pretraining plus task fine-tuning (DistilBERT FT, BERT-large retrain) — both reach the high-accuracy region of the comparison. The general sentiment model, which has neither, does not.
 
-### 13.3 Larger Models Are More Sensitive To Hyperparameters
+### 12.3 Larger Models Are More Sensitive To Hyperparameters
 
-The original BERT-large run produced a striking failure: the model collapsed to predicting only the neutral class. At first reading this looked like clean evidence that "bigger is not better" for this task. The supplementary retraining experiment in §12.5 substantially revises this interpretation.
+The original BERT-large run produced a striking failure: the model collapsed to predicting only the neutral class. At first reading this looked like clean evidence that "bigger is not better" for this task. The supplementary retraining experiment in §11.5 substantially revises this interpretation.
 
 With three targeted hyperparameter corrections — a four-times lower learning rate (5e-6 instead of 2e-5), linear warmup over the first 10% of training steps, and two additional epochs — the same BERT-large architecture trained on the same data reached an accuracy of 0.9845, the **highest in the entire study**. The original collapse was a training artifact, not a property of the model.
 
 The honest reading is therefore: **large transformer models are more sensitive to hyperparameter choice than smaller ones.** With default hyperparameters that work for smaller transformers, a large transformer can fail completely; with appropriately tuned hyperparameters, the same architecture can produce the best result. This is a more nuanced and more practically useful conclusion than "bigger is not better".
 
-The engineering cost is real. The corrected retraining required GPU acceleration (Google Colab T4) and approximately 24.5 minutes of training time, compared to roughly 2.5 minutes for DistilBERT on a local M-series MPS device. A research or production team choosing between these approaches must weigh that cost against the modest absolute accuracy advantage, which the McNemar test in §12.6 finds is not statistically significant at n = 453.
+The engineering cost is real. The corrected retraining required GPU acceleration (Google Colab T4) and approximately 24.5 minutes of training time, compared to roughly 2.5 minutes for DistilBERT on a local M-series MPS device. A research or production team choosing between these approaches must weigh that cost against the modest absolute accuracy advantage, which the McNemar test in §11.6 finds is not statistically significant at n = 453.
 
-### 13.4 Accuracy vs Efficiency
+### 12.4 Accuracy vs Efficiency
 
 The thesis compared not only accuracy but also inference time and memory usage. This matters because real software systems must run efficiently, not only correctly.
 
-The classical TF-IDF + Logistic Regression baseline added in §12.3 makes the efficiency comparison even sharper. The classical baseline reaches 0.8653 accuracy at approximately 700 times faster inference and 60 times lower memory than the best transformer. The transformers' approximately 10-percentage-point accuracy advantage over the classical baseline is real and statistically significant (§12.6), but it comes at a substantial engineering cost.
+The classical TF-IDF + Logistic Regression baseline added in §11.3 makes the efficiency comparison even sharper. The classical baseline reaches 0.8653 accuracy at approximately 700 times faster inference and 60 times lower memory than the best transformer. The transformers' approximately 10-percentage-point accuracy advantage over the classical baseline is real and statistically significant (§11.6), but it comes at a substantial engineering cost.
 
 Within the transformer group, fine-tuned DistilBERT and the corrected BERT-large form a different cost-performance trade-off. DistilBERT FT trains in a few minutes on a laptop with standard hyperparameters; BERT-large requires a GPU and a non-default training recipe. Both reach the same statistical accuracy band. For most practical deployments, the smaller model is the more attractive engineering choice.
 
-### 13.5 Importance of Layered Experiments
+### 12.5 Importance of Layered Experiments
 
-A central methodological feature of this thesis is that the model comparison is supported by multiple controlled experiments rather than a single final ranking. The original epoch and dataset-size experiments (§8 and §9) showed how DistilBERT performance varies with training duration and training data volume. The supplementary experiments in §12 added a held-out validation verification (§12.1), a five-seed variance estimate (§12.2), a classical baseline (§12.3), a macro-F1 analysis (§12.4), a corrected BERT-large retraining (§12.5), and McNemar pairwise statistical tests (§12.6).
+A central methodological feature of this thesis is that the model comparison is supported by multiple controlled experiments rather than a single final ranking. The original epoch and dataset-size experiments (§8 and §9) showed how DistilBERT performance varies with training duration and training data volume. The supplementary experiments in §11 added a held-out validation verification (§11.1), a five-seed variance estimate (§11.2), a classical baseline (§11.3), a macro-F1 analysis (§11.4), a corrected BERT-large retraining (§11.5), and McNemar pairwise statistical tests (§11.6).
 
 The combined effect of these experiments is that every claim made by this thesis about model performance is supported by more than one piece of evidence. A claim about training duration is supported both by an epoch sweep and by an independent held-out validation check. A claim about which model is best is qualified both by multi-seed variance and by McNemar p-values. A claim about transformer value over classical methods is supported by an actual classical baseline and a significance test. This layered approach is what allows the thesis to make conservative, defensible statements about model behavior rather than over-claiming on the basis of a single number.
 
 ---
 
-## 14. Limitations
+## 13. Limitations
 
 Every practical experiment has limitations. The main limitations of this thesis are:
 
-### 14.1 Dataset Size
+### 13.1 Dataset Size
 
-The dataset is relatively small. The training set contains 1,811 examples and the test set contains 453 examples. This is enough for a controlled thesis experiment, but larger datasets would make the conclusions more robust. In particular, the McNemar test in §12.6 has limited statistical power at n = 453, which is part of why the three top transformers cannot be statistically separated from each other; a larger test set might make the small numerical differences detectable.
+The dataset is relatively small. The training set contains 1,811 examples and the test set contains 453 examples. This is enough for a controlled thesis experiment, but larger datasets would make the conclusions more robust. In particular, the McNemar test in §11.6 has limited statistical power at n = 453, which is part of why the three top transformers cannot be statistically separated from each other; a larger test set might make the small numerical differences detectable.
 
-### 14.2 Class Imbalance
+### 13.2 Class Imbalance
 
-The neutral class is much larger than the negative and positive classes (61%, 13%, and 25% respectively). Class imbalance was the proximate cause of the original BERT-large collapse, although the supplementary retraining experiment in §12.5 showed that the collapse was avoidable with proper hyperparameters. Class imbalance still inflates weighted F1 relative to macro F1 (§12.4) for any model with per-class weaknesses, and it remains a real challenge for evaluation rather than just for training.
+The neutral class is much larger than the negative and positive classes (61%, 13%, and 25% respectively). Class imbalance was the proximate cause of the original BERT-large collapse, although the supplementary retraining experiment in §11.5 showed that the collapse was avoidable with proper hyperparameters. Class imbalance still inflates weighted F1 relative to macro F1 (§11.4) for any model with per-class weaknesses, and it remains a real challenge for evaluation rather than just for training.
 
-### 14.3 Hyperparameter Tuning Coverage
+### 13.3 Hyperparameter Tuning Coverage
 
-The hyperparameter coverage in this thesis is partial. The epoch sweep (§8) covered three values; the dataset-size sweep (§9) covered four fractions; the BERT-large retraining (§12.5) tested one corrected configuration. More extensive tuning — for example a learning-rate sweep on each model, or a hyperparameter search with cross-validation — would strengthen the conclusions further. The work performed here is sufficient to support the specific claims made, but it is not an exhaustive hyperparameter study.
+The hyperparameter coverage in this thesis is partial. The epoch sweep (§8) covered three values; the dataset-size sweep (§9) covered four fractions; the BERT-large retraining (§11.5) tested one corrected configuration. More extensive tuning — for example a learning-rate sweep on each model, or a hyperparameter search with cross-validation — would strengthen the conclusions further. The work performed here is sufficient to support the specific claims made, but it is not an exhaustive hyperparameter study.
 
-### 14.4 Hardware Constraints
+### 13.4 Hardware Constraints
 
 The 340-million-parameter BERT-large model required GPU acceleration for both the original training and the corrected retraining. The local M-series MPS device used for DistilBERT and the classical baseline is not powerful enough to make BERT-large training practical, so BERT-large was trained on Google Colab using a T4 GPU. This means that the time and memory numbers reported for BERT-large are not directly comparable on the same hardware as the other models, only as rough cost indicators.
 
-### 14.5 Memory Measurement
+### 13.5 Memory Measurement
 
 Memory usage was measured using process resident-set-size deltas before and after the inference (or training) section of each script. This gives a useful practical indication of memory pressure, but it is not equivalent to GPU peak memory or to a careful memory profile. For models trained in different processes or on different devices (in particular BERT-large on Colab vs the other models on local MPS), the memory numbers should be interpreted as approximate.
 
-### 14.6 Single Dataset
+### 13.6 Single Dataset
 
 The thesis uses a single financial sentiment dataset (Financial PhraseBank, `sentences_allagree` configuration). Testing the same models on additional financial sentiment datasets — for example FiQA, financial Twitter data, or earnings-call transcripts — would help separate findings that are specific to this dataset from those that generalize across financial sentiment more broadly.
 
-### 14.7 Statistical Power Of The McNemar Tests
+### 13.7 Statistical Power Of The McNemar Tests
 
-The McNemar pairwise tests in §12.6 use a test set of 453 sentences. At this sample size, only relatively large per-prediction disagreement counts produce significant p-values. The three top transformers disagree with each other on between 10 and 17 test sentences total per pair, which is below the threshold for significance at α = 0.05. With a larger test set, some of these pairwise gaps might become statistically detectable. The "statistically tied" finding for the top three transformers should therefore be read as "tied at this sample size", not "tied in the underlying population".
+The McNemar pairwise tests in §11.6 use a test set of 453 sentences. At this sample size, only relatively large per-prediction disagreement counts produce significant p-values. The three top transformers disagree with each other on between 10 and 17 test sentences total per pair, which is below the threshold for significance at α = 0.05. With a larger test set, some of these pairwise gaps might become statistically detectable. The "statistically tied" finding for the top three transformers should therefore be read as "tied at this sample size", not "tied in the underlying population".
 
 ---
 
-## 15. Future Work
+## 14. Future Work
 
 Several improvements could be made in future work, building on what was completed and what remains open.
 
-### 15.1 Larger Financial Datasets
+### 14.1 Larger Financial Datasets
 
-Future experiments could use larger financial datasets — for example by combining multiple Financial PhraseBank agreement levels, adding FiQA, or augmenting with curated financial Twitter or news text. A larger test set in particular would increase the statistical power of the McNemar tests (§14.7) and might separate the currently-tied top transformers.
+Future experiments could use larger financial datasets — for example by combining multiple Financial PhraseBank agreement levels, adding FiQA, or augmenting with curated financial Twitter or news text. A larger test set in particular would increase the statistical power of the McNemar tests (§13.7) and might separate the currently-tied top transformers.
 
-### 15.2 Class Balancing
+### 14.2 Class Balancing
 
 Future work could apply class weighting in the loss function, oversampling of minority classes, or stratified focal loss. These techniques are particularly relevant for large model fine-tuning, where the original BERT-large collapse showed how brittle the default cross-entropy plus imbalanced data combination can be.
 
-### 15.3 More Systematic Hyperparameter Search
+### 14.3 More Systematic Hyperparameter Search
 
-The corrected BERT-large retraining in §12.5 demonstrated that hyperparameter choice can produce a roughly 37-percentage-point swing in accuracy. A more systematic hyperparameter search — for example a grid search or Bayesian search over learning rate, warmup ratio, batch size, and epoch count — could find configurations that improve the smaller models too, or that reduce the GPU-time cost of BERT-large.
+The corrected BERT-large retraining in §11.5 demonstrated that hyperparameter choice can produce a roughly 37-percentage-point swing in accuracy. A more systematic hyperparameter search — for example a grid search or Bayesian search over learning rate, warmup ratio, batch size, and epoch count — could find configurations that improve the smaller models too, or that reduce the GPU-time cost of BERT-large.
 
-### 15.4 Newer Architectures
+### 14.4 Newer Architectures
 
 Future work could include newer transformer architectures (e.g., RoBERTa, DeBERTa, ModernBERT) or instruction-tuned models (e.g., Llama-class fine-tuning). The same evaluation framework used in this thesis — same test split, same metrics, same controlled experiments — could be applied to each.
 
-### 15.5 API Deployment
+### 14.5 API Deployment
 
-The Streamlit prototype could be extended into a full API-based system, with a backend service that accepts financial text and returns predictions in JSON format, plus a frontend or downstream integration consuming that service.
+The pipeline could be packaged as an API-based system, with a backend service that accepts financial text and returns predictions in JSON format, plus a frontend or downstream integration consuming that service.
 
-### 15.6 Multilingual Financial Sentiment
+### 14.6 Multilingual Financial Sentiment
 
 The current work is monolingual (English). Future work could explore multilingual financial sentiment analysis, including Macedonian or other regional financial text. This would likely require either a multilingual base model (e.g., mBERT, XLM-R) or domain-pretrained multilingual variants.
 
-### 15.7 Real-Time News Monitoring
+### 14.7 Real-Time News Monitoring
 
 The prototype could be extended into a real-time news monitoring pipeline. The system could ingest a stream of financial headlines via an API, classify them in near-real-time, and produce alerts or aggregate sentiment indicators.
 
-### 15.8 Confidence Calibration
+### 14.8 Confidence Calibration
 
-Beyond accuracy, future work could investigate whether model confidence scores are well-calibrated — that is, whether a "90% confident" prediction is actually correct 90% of the time. Calibration matters for downstream use where the confidence is consumed by a decision rule (e.g., manual review thresholds in the Streamlit app).
+Beyond accuracy, future work could investigate whether model confidence scores are well-calibrated — that is, whether a "90% confident" prediction is actually correct 90% of the time. Calibration matters for downstream use where the confidence is consumed by a decision rule (e.g., manual review thresholds in a deployment workflow).
 
 ---
 
-## 16. Conclusion
+## 15. Conclusion
 
 This thesis presented a complete practical NLP project for financial sentiment analysis. The project compared small, large, domain-specific, and classical models on the Financial PhraseBank dataset, using a layered methodology that included an initial single-seed comparison, two controlled experiments on training duration and data size, and six supplementary methodological experiments performed to qualify and refine the headline numbers.
 
@@ -1070,9 +1009,9 @@ The models evaluated were:
 - fine-tuned BERT-large in two configurations — original (default hyperparameters) and retrained (corrected hyperparameters),
 - a classical TF-IDF + Logistic Regression baseline.
 
-The initial single-seed comparison showed that the general sentiment baseline performed poorly because it cannot predict the neutral class, FinBERT and fine-tuned DistilBERT performed very strongly (around 97% accuracy each), and the original BERT-large run collapsed to predicting the majority class. The supplementary experiments in §12 then refined these findings in three important ways.
+The initial single-seed comparison showed that the general sentiment baseline performed poorly because it cannot predict the neutral class, FinBERT and fine-tuned DistilBERT performed very strongly (around 97% accuracy each), and the original BERT-large run collapsed to predicting the majority class. The supplementary experiments in §11 then refined these findings in three important ways.
 
-First, the multi-seed experiment (§12.2) and McNemar significance test (§12.6) together showed that fine-tuned DistilBERT and FinBERT are **statistically equivalent** within seed variance — the original "DistilBERT beat FinBERT" claim was a single-seed artifact. Second, the BERT-large retraining experiment (§12.5) showed that the original collapse was a hyperparameter artifact: with a four-times lower learning rate and linear warmup, the same BERT-large architecture reached an accuracy of 0.9845, the highest in the entire study. Third, the classical baseline (§12.3) reached 0.8653 accuracy at approximately 700 times faster inference and 60 times lower memory than the best transformer, framing the transformer's added value in concrete engineering terms; the McNemar test showed that all three top transformers significantly outperform the classical baseline (p < 0.001) while being statistically indistinguishable from each other at n = 453.
+First, the multi-seed experiment (§11.2) and McNemar significance test (§11.6) together showed that fine-tuned DistilBERT and FinBERT are **statistically equivalent** within seed variance — the original "DistilBERT beat FinBERT" claim was a single-seed artifact. Second, the BERT-large retraining experiment (§11.5) showed that the original collapse was a hyperparameter artifact: with a four-times lower learning rate and linear warmup, the same BERT-large architecture reached an accuracy of 0.9845, the highest in the entire study. Third, the classical baseline (§11.3) reached 0.8653 accuracy at approximately 700 times faster inference and 60 times lower memory than the best transformer, framing the transformer's added value in concrete engineering terms; the McNemar test showed that all three top transformers significantly outperform the classical baseline (p < 0.001) while being statistically indistinguishable from each other at n = 453.
 
 The refined headline finding of the thesis is:
 
@@ -1080,11 +1019,9 @@ The refined headline finding of the thesis is:
 
 This finding is more nuanced and more practically useful than the earlier "bigger is not better" framing it replaces. It treats large models as a high-risk, high-reward option that requires careful engineering, smaller fine-tuned models as a robust default with comparable accuracy, and domain-pretrained models as a strong off-the-shelf option when domain pretraining is available for the target domain.
 
-The epoch experiment showed that two epochs produced the best DistilBERT result, a choice independently confirmed by the held-out validation experiment in §12.1. The dataset-size experiment showed that performance improved strongly from 25% to 50% of the training data, with smaller gains afterward.
+The epoch experiment showed that two epochs produced the best DistilBERT result, a choice independently confirmed by the held-out validation experiment in §11.1. The dataset-size experiment showed that performance improved strongly from 25% to 50% of the training data, with smaller gains afterward.
 
-The project also delivered a Streamlit prototype that makes the system interactive — supporting live single-sentence sentiment analysis, multi-model comparison, batch analysis, result visualization, and CSV export. This makes the practical part more than an experiment: it is a working software system that demonstrates how the research results can be packaged for downstream use.
-
-Overall, the thesis combines theoretical foundations, machine learning implementation, software engineering structure, layered experimental evaluation with explicit statistical testing, and an interactive presentation. It demonstrates that careful model selection and evaluation — across not only accuracy but also cost, hyperparameter sensitivity, statistical significance, and per-class behavior — are essential when applying NLP models to real-world domain-specific tasks.
+Overall, the thesis combines theoretical foundations, machine learning implementation, software engineering structure, and layered experimental evaluation with explicit statistical testing. It demonstrates that careful model selection and evaluation — across not only accuracy but also cost, hyperparameter sensitivity, statistical significance, and per-class behavior — are essential when applying NLP models to real-world domain-specific tasks.
 
 ---
 
@@ -1131,7 +1068,6 @@ The implementation is organized as follows:
 15_multi_seed_distilbert.py         Supplementary: 5-seed variance estimate of DistilBERT FT
 16_bert_large_retrain.py            Supplementary: BERT-large retrain with corrected hyperparameters
 17_significance_and_errors.py       Supplementary: McNemar pairwise tests + error analysis
-app.py                              Streamlit demo app
 ```
 
 ## Appendix B: Main Result Files
@@ -1150,20 +1086,3 @@ results/memory_comparison.png
 results/main_summary_figure.png
 ```
 
-## Appendix C: How to Run the Application
-
-The Streamlit application can be started with:
-
-```bash
-streamlit run app.py
-```
-
-The application includes:
-
-- product dashboard
-- live model comparison
-- batch analyzer
-- final comparison tables
-- experiment graphs
-- confusion matrices
-- prediction file previews

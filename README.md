@@ -10,7 +10,7 @@ It evaluates:
 - fine-tuned DistilBERT,
 - fine-tuned BERT-large,
 
-and includes controlled experiments on epoch count and training-data size, a presentation-asset generator (confusion matrices, architecture diagram, summary), and a Streamlit demo app for live comparison.
+and includes controlled experiments on epoch count and training-data size, plus a presentation-asset generator (confusion matrices, architecture diagram, summary).
 
 Labels:
 
@@ -45,7 +45,6 @@ The project is split into clear files:
 15_multi_seed_distilbert.py
 16_bert_large_retrain.py
 17_significance_and_errors.py
-app.py
 
 data/
 models/
@@ -75,7 +74,6 @@ Each file has one responsibility:
 15_multi_seed_distilbert.py         Supplementary: 5-seed DistilBERT FT for mean ± std variance estimates
 16_bert_large_retrain.py            Supplementary: BERT-large retrain with corrected hyperparameters (LR 5e-6 + warmup) — intended for Colab/GPU
 17_significance_and_errors.py       Supplementary: pairwise McNemar tests + per-model error analysis on saved predictions
-app.py                              Streamlit demo app
 ```
 
 Run the structured pipeline in this order:
@@ -369,67 +367,6 @@ Run:
 conda run -n diplomska-nlp python 06_results.py
 ```
 
-## Step 25: Create a Streamlit UI
-
-The project now includes an interactive demo:
-
-```text
-app.py
-```
-
-The UI includes:
-
-```text
-Text input
-Analyze button
-Model selection
-Prediction label
-Confidence score
-Model comparison
-Saved results table
-Final graphs
-```
-
-Run:
-
-```bash
-streamlit run app.py
-```
-
-The UI supports live predictions with FinBERT and the fine-tuned DistilBERT model. Fine-tuned BERT-large is shown in the saved results table and will be available for live prediction if the saved model folder is copied into `models/bert-large-finetuned/`.
-
-## Step 26: Multi-Model Comparison UI
-
-The Streamlit UI now runs all available live models for the same input sentence and displays the predictions side by side.
-
-Live comparison includes:
-
-```text
-FinBERT
-DistilBERT FT
-BERT-large
-```
-
-Run:
-
-```bash
-streamlit run app.py
-```
-
-Enter one financial sentence and click `Analyze`. The UI shows each model's predicted label and confidence score in one table.
-
-The UI is organized into tabs:
-
-```text
-Live Demo
-Final Comparison
-Epoch Experiment
-Dataset Size Experiment
-Prediction Files
-```
-
-This makes the Streamlit app usable as a complete дипломска presentation dashboard.
-
 ## Step 27: Controlled Experiments
 
 The project now includes two deeper experiments for the дипломска analysis.
@@ -473,8 +410,6 @@ results/experiment_data_size_time.png
 results/experiment_data_size_efficiency.png
 ```
 
-The Streamlit UI also includes three ready-made finance demo sentences for positive, negative, and neutral examples.
-
 If you already have the experiment CSV files and only want to regenerate improved graphs, run:
 
 ```bash
@@ -510,5 +445,3 @@ results/architecture_diagram.png
 results/main_summary_figure.png
 results/analysis_summary.md
 ```
-
-The Streamlit UI displays these in the `Analysis` tab.
