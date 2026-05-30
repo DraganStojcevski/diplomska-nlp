@@ -1,33 +1,3 @@
-"""
-17_significance_and_errors.py — McNemar significance tests + error analysis.
-
-Two outputs:
-
-  1) Pairwise McNemar tests (two-sided exact binomial) on key model
-     pairs, to formalize claims the deck and thesis make:
-       - "DistilBERT FT vs FinBERT is statistically a tie."
-       - "BERT-large retrain beats DistilBERT FT / FinBERT significantly."
-       - "The three top transformers all beat the classical baseline
-         significantly."
-
-  2) Error analysis on the three top models (FinBERT, DistilBERT FT,
-     BERT-large retrain): per-model error counts, true->predicted
-     confusion patterns, and the test sentences that even all three
-     models get wrong.
-
-Outputs (all new files):
-  results/mcnemar_results.csv
-  results/mcnemar_summary.md
-  results/error_analysis.csv
-  results/error_analysis_summary.md
-
-Does NOT modify any existing files. Operates entirely on saved
-prediction CSVs.
-
-Run:
-  conda run -n diplomska-nlp python 17_significance_and_errors.py
-"""
-
 from pathlib import Path
 import pandas as pd
 from scipy.stats import binomtest

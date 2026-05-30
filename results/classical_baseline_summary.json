@@ -15,9 +15,9 @@
     "random_state": 42
   },
   "vocabulary_size": 20000,
-  "training_time_seconds": 0.2079460620880127,
-  "inference_time_seconds": 0.008028268814086914,
-  "memory_mb": 35.03125,
+  "training_time_seconds": 0.1302509307861328,
+  "inference_time_seconds": 0.005527019500732422,
+  "memory_mb": 32.6875,
   "num_train_examples": 1811,
   "num_test_examples": 453,
   "accuracy": 0.8653421633554084,

@@ -1,23 +1,3 @@
-"""
-15_multi_seed_distilbert.py — Multi-seed DistilBERT FT for variance estimates.
-
-Supplementary methodology experiment. Re-runs the fine-tuned DistilBERT
-pipeline (same hyperparameters as 05_train_distilbert.py: 3 epochs, batch
-8, lr 2e-5, max_length 128, full 1,811-sentence train set) across 5
-random seeds. The single-seed headline result (accuracy 0.9713, seed 42)
-in model_comparison.csv is a point estimate; this script reports mean ±
-std across seeds so the headline number can be qualified honestly.
-
-Does NOT save the trained models (only metrics) and does NOT touch any
-existing files. New outputs only:
-
-    results/multi_seed_distilbert.csv          (per-seed metrics)
-    results/multi_seed_distilbert_summary.json (aggregate mean/std + per-seed)
-
-Run:
-  conda run --no-capture-output -n diplomska-nlp python 15_multi_seed_distilbert.py
-"""
-
 from pathlib import Path
 import gc
 import json

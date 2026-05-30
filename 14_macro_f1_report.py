@@ -1,26 +1,3 @@
-"""
-14_macro_f1_report.py — Macro-F1 + per-class F1 report across all models.
-
-Supplementary: surfaces macro-F1 and per-class F1 numbers (already computed
-inside the eval JSONs but never shown alongside the headline weighted-F1).
-The point is methodological honesty — weighted F1 is dominated by the
-majority class (neutral, 61% of the test set), and macro F1 treats each
-class equally. Where weighted F1 papers over per-class weakness, macro F1
-surfaces it.
-
-Reads existing prediction CSVs (untouched), recomputes both metrics from
-raw predictions so there is a single source of truth. Outputs:
-
-    results/macro_f1_comparison.csv     (Model x F1 weighted/macro/per-class)
-    results/macro_f1_comparison.png     (grouped bars: weighted vs macro)
-    results/per_class_f1.png            (grouped bars: F1 per class per model)
-
-Does NOT modify any existing files.
-
-Run:
-  conda run -n diplomska-nlp python 14_macro_f1_report.py
-"""
-
 from pathlib import Path
 import os
 

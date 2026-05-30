@@ -1,24 +1,3 @@
-"""
-13_classical_baseline.py — Classical ML baseline (TF-IDF + Logistic Regression).
-
-Supplementary experiment that adds a non-transformer reference point so the
-transformer numbers can be judged against a cheap classical baseline. The
-question it answers: "what does non-transformer ML already give you for
-free, and how much does the transformer extra cost actually buy?"
-
-Trains a TF-IDF + Logistic Regression pipeline on data/train.csv (untouched
-on disk) and evaluates on data/test.csv. All outputs are new files:
-
-    results/classical_baseline_predictions.csv
-    results/classical_baseline_summary.json
-    results/model_comparison_extended.csv   (existing 4 + this baseline)
-
-Does NOT modify any existing files in data/, models/, or results/.
-
-Run:
-  conda run -n diplomska-nlp python 13_classical_baseline.py
-"""
-
 from pathlib import Path
 import json
 import os

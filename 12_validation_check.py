@@ -1,34 +1,3 @@
-"""
-12_validation_check.py — Validation-set hyperparameter verification.
-
-Supplementary methodology experiment. Does NOT modify any existing files in
-data/, models/, or results/. All outputs are new files prefixed
-`validation_check_*`.
-
-The original pipeline trained DistilBERT on data/train.csv (1811 sentences)
-and evaluated each epoch on data/test.csv (453 sentences). That uses the test
-set for hyperparameter selection, which is a known methodological weakness.
-
-This script:
-  1. Reads data/train.csv (left untouched on disk).
-  2. Carves a stratified validation subset out of the train DataFrame
-     (12.5% -> ~226 sentences), leaving ~1585 for training.
-  3. Trains DistilBERT for 5 epochs, evaluating on val after each epoch.
-  4. Picks the best epoch by VALIDATION accuracy. Test is recorded each
-     epoch for observation only -- it is never used for the selection.
-  5. Reports the test-set accuracy at that chosen epoch as the final number.
-  6. Writes results to:
-        results/validation_check_history.csv
-        results/validation_check_summary.json
-
-The claim it defends: "the best epoch chosen on a held-out validation set
-agrees with the best epoch from the original epoch experiment, which used
-test for selection. Our hyperparameter choices are robust."
-
-Run:
-  conda run --no-capture-output -n diplomska-nlp python 12_validation_check.py
-"""
-
 from pathlib import Path
 import json
 import os
