@@ -146,6 +146,15 @@ conda run -n diplomska-nlp python 17_significance_and_errors.py
 
 ## References
 
+### Related work — small vs large language models
+
+- Belcak, P., Heinrich, G., Diao, S., Fu, Y., Dong, X., Muralidharan, S., Lin, Y. C., & Molchanov, P. (2025). *Small Language Models are the Future of Agentic AI.* arXiv:2506.02153.
+- Chen, Y., Zhao, J., & Han, H. (2025). *A Survey on Collaborative Mechanisms Between Large and Small Language Models.* arXiv:2505.07460.
+- Gupta, A., Thomas, B., Asnani, H., Madduru, P. R., Feroze, S., Subramanian, S., Elango, V., & Gungor, M. (2025). *Small Language Models (SLMs) Can Still Pack a Punch: A survey.* arXiv:2501.05465.
+- Sakib, T. H., Hosain, M. T., & Morol, M. K. (2025). *Small Language Models: Architectures, Techniques, Evaluation, Problems and Future Adaptation.* arXiv:2505.19529.
+
+### Methods and dataset
+
 - **Financial PhraseBank**: Malo, P., Sinha, A., Korhonen, P., Wallenius, J., & Takala, P. (2014). *Good debt or bad debt: Detecting semantic orientations in economic texts.*
 - **BERT**: Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). *Pre-training of deep bidirectional transformers for language understanding.*
 - **DistilBERT**: Sanh, V., Debut, L., Chaumond, J., & Wolf, T. (2019). *A distilled version of BERT: smaller, faster, cheaper and lighter.*
